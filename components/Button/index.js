@@ -1,4 +1,6 @@
-const Button = ({children, className, ...props}) =>{
+import React from 'react';
+
+const Button = React.forwardRef(function Button({children, className, ...props},ref){
     return(
         <button
             className={`
@@ -14,6 +16,6 @@ const Button = ({children, className, ...props}) =>{
             { children }
         </button>
     )
-}
+})
 
 export default Button;
