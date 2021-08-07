@@ -2,14 +2,28 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
+import { signIn, useSession } from 'next-auth/client'
+import {useRouter} from "next/router";
 
 const Login = () => {
+    const session =  useSession()
     const initialValues = {
         email:"",
         password:"",
     }
-    const handleSubmit = (values) => {
-        console.log(values)
+    const router = useRouter()
+    const handleSubmit = async (values) => {
+        const response = await signIn('credentials',{
+            redirect:false,
+            username: values.email,
+            password: values.password,
+        })
+            .then((response) => {
+                router.push('/protected/')
+            })
+            .catch(e => {
+                throw new Error(e)
+            })
     }
     return(
         <div className="
@@ -47,7 +61,7 @@ const Login = () => {
                         >
                             <Form>
                                 <label className="flex flex-col items-start p-2">
-                                    E-mail
+                                    Email
                                     <Field
                                         type="email"
                                         name="email"
@@ -64,7 +78,7 @@ const Login = () => {
                                     />
                                 </label>
                                 <label className="flex flex-col items-start p-2">
-                                    E-mail
+                                    Password
                                     <Field
                                         type="password"
                                         name="password"
