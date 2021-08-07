@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Link from 'next/link'
 import Button from "../Button";
+import { LOGIN_PATH, REGISTER_PATH } from '../../lib/constants'
 
 export default function Navbar({ showNav }) {
     const [navbarOpen, setNavbarOpen] = useState(false);
@@ -108,7 +109,7 @@ export default function Navbar({ showNav }) {
                             ${!navbarOpen && "space-x-2"}
                             `}>
                                 <div>
-                                    <Link href="/join/login">
+                                    <Link href={LOGIN_PATH}>
                                         <Button
                                             className={
                                                 !navbarOpen &&
@@ -121,7 +122,7 @@ export default function Navbar({ showNav }) {
                                     </Link>
                                 </div>
                                 <div>
-                                    <Link href="/join/register">
+                                    <Link href={REGISTER_PATH}>
                                         <Button
                                             className={
                                                 !navbarOpen &&

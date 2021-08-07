@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
-import { signIn, useSession } from 'next-auth/client'
+import { signIn } from 'next-auth/client'
 import {useRouter} from "next/router";
 
 const Login = () => {
-    const session =  useSession()
+    const [error, setError] = useState();
     const initialValues = {
         email:"",
         password:"",
@@ -19,6 +19,10 @@ const Login = () => {
             password: values.password,
         })
             .then((response) => {
+                if(response.error){
+                    setError(response.error)
+                    return;
+                }
                 router.push('/protected/')
             })
             .catch(e => {
@@ -94,6 +98,21 @@ const Login = () => {
                                             "
                                     />
                                 </label>
+                                {error &&
+                                    <div
+                                        className="
+                                            text-white
+                                            text-sm
+                                            font-medium
+                                            border
+                                            bg-red-500
+                                            p-2
+                                            rounded
+                                        "
+                                    >
+                                        { error }
+                                    </div>
+                                }
                                 <Button
                                     type="submit"
                                     className="
