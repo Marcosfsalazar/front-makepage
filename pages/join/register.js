@@ -1,16 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
+import {useMutation} from "@apollo/client";
+import { userRegister as register } from "../../lib/mutations/userMutations"
+import apolloErrorHandler from "../../utils/apolloErrorHandler";
+import {useRouter} from "next/router";
+import {LOGIN_PATH} from "../../lib/constants";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
+    const [userRegister] = useMutation(register);
+    const [error, setError] = useState('');
+    const router = useRouter();
     const initialValues = {
         user:"",
         email:"",
         password:"",
     }
-    const handleSubmit = (values) => {
-        console.log(values)
+    const handleSubmit = ({user, email, password}) => {
+        userRegister({
+            variables:{
+                input: {
+                    username: user,
+                    email,
+                    password
+                }
+            }
+        })
+            .then(response => {
+                toast.configure()
+                toast('Registrado com sucesso!',{
+                    position: "bottom-center",
+                    autoClose: 3000,
+                    closeOnClick: true
+                })
+                router.push(LOGIN_PATH);
+            })
+            .catch(error => {
+                setError(apolloErrorHandler(error))
+            })
     }
     return(
         <div className="
@@ -52,6 +82,7 @@ const Register = () => {
                                         <Field
                                             name="user"
                                             placeholder="nome de usuário"
+                                            required
                                             className="
                                                 border
                                                 border-gray-600
@@ -69,6 +100,7 @@ const Register = () => {
                                             type="email"
                                             name="email"
                                             placeholder="email"
+                                            required
                                             className="
                                                 border
                                                 border-gray-600
@@ -81,11 +113,12 @@ const Register = () => {
                                         />
                                     </label>
                                     <label className="flex flex-col items-start p-2">
-                                        E-mail
+                                        Senha
                                         <Field
                                             type="password"
                                             name="password"
                                             placeholder="password"
+                                            required
                                             className="
                                                 border
                                                 border-gray-600
@@ -97,6 +130,21 @@ const Register = () => {
                                             "
                                         />
                                     </label>
+                                    {error &&
+                                    <div
+                                        className="
+                                            text-white
+                                            text-sm
+                                            font-medium
+                                            border
+                                            bg-red-500
+                                            p-2
+                                            rounded
+                                        "
+                                    >
+                                        { error }
+                                    </div>
+                                    }
                                     <Button
                                         type="submit"
                                         className="

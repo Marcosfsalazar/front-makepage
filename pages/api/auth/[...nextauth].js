@@ -47,7 +47,7 @@ const options = {
         },
     },
     pages:{
-        signIn: '/protected/',
+        signIn: '/home/',
         error: '/join/login',
     }
 };

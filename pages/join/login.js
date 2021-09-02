@@ -4,6 +4,8 @@ import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
 import { signIn } from 'next-auth/client'
 import {useRouter} from "next/router";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = () => {
     const [error, setError] = useState();
@@ -23,7 +25,14 @@ const Login = () => {
                     setError(response.error)
                     return;
                 }
-                router.push('/protected/')
+                toast.configure();
+                toast('Logado com sucesso!',{
+                    position: "bottom-center",
+                    autoClose: 3000,
+                    closeOnClick: true,
+                    hideProgressBar: true,
+                })
+                router.push('/home/')
             })
             .catch(e => {
                 throw new Error(e)
@@ -79,6 +88,7 @@ const Login = () => {
                                                 font-medium
                                                 p-1
                                             "
+                                        required
                                     />
                                 </label>
                                 <label className="flex flex-col items-start p-2">
@@ -95,6 +105,7 @@ const Login = () => {
                                                 font-mono
                                                 font-medium
                                                 p-1
+                                                required
                                             "
                                     />
                                 </label>
@@ -108,6 +119,7 @@ const Login = () => {
                                             bg-red-500
                                             p-2
                                             rounded
+                                            required
                                         "
                                     >
                                         { error }

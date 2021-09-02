@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import Link from "next/link"
+import {LOGIN_PATH} from "../lib/constants";
 
 export default function Home() {
   return (
@@ -12,6 +13,8 @@ export default function Home() {
         h-screen
         min-h-screen
         max-h-screen
+        m-0
+        p-0
         "
     >
       <Head>
@@ -22,7 +25,7 @@ export default function Home() {
           w-full
           h-20"
       >
-        <Navbar showNav/>
+        <Navbar/>
       </header>
       <section
           className="
@@ -78,6 +81,23 @@ export default function Home() {
               <span className="mt-0.5 font-bold">REGISTRE-SE</span>
             </Button>
           </Link>
+          <p
+              className="text-sm text-gray-500"
+          >
+            Já tem uma conta? faça <Link href={LOGIN_PATH}>
+            <span
+              className="
+              text-gray-600
+              font-semibold
+              cursor-pointer
+              hover:text-green-500
+              hover:rounded
+              "
+          >
+            Login
+          </span>
+          </Link>
+          </p>
         </article>
       </section>
     </div>
