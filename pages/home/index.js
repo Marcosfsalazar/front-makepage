@@ -1,27 +1,16 @@
 import { useSession, signOut } from 'next-auth/client'
 import {useRouter} from "next/router";
 import Menu from "../../components/Menu/Menu";
+import Link from "next/link";
 
 export default function Home(){
     const router = useRouter();
     const [{ user }, loading] = useSession()
-    console.log(user)
-    const handleLogout = (e) => {
-        e.preventDefault()
-        signOut({
-            redirect: false,
-        })
-            .then(() => {
-                router.push('/')
-            })
-            .catch(e => {
-                throw new Error(e)
-            })
-    }
+    console.log(user);
     return (
         <>
             <section className="flex h-auto">
-                <Menu user={user?.username}/>
+                <Menu username={ user?.username }/>
                 <main className="bg-white w-full flex-col">
                     <div
                         className="
@@ -71,27 +60,29 @@ export default function Home(){
                             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                             Ut enim ad minim veniam, quis
                         </p>
-                        <button
-                            className="
-                                bg-gray-100
-                                w-full
-                                h-32
-                                my-8
-                                border-gray-300
-                                border-2
-                                border-dotted
-                                text-center
-                            "
-                        >
-                            <span
+                        <Link href={`/builder/card/${user?.id}?username=${user?.username}`}>
+                            <button
                                 className="
-                                text-2xl
-                                text-gray-500
+                                    bg-gray-100
+                                    w-full
+                                    h-32
+                                    my-8
+                                    border-gray-300
+                                    border-2
+                                    border-dotted
+                                    text-center
                                 "
                             >
-                                Virtual Card
-                            </span>
-                        </button>
+                                <span
+                                    className="
+                                    text-2xl
+                                    text-gray-500
+                                    "
+                                >
+                                    Virtual Card
+                                </span>
+                            </button>
+                        </Link>
                         <button
                             className="
                                 bg-gray-100

@@ -41,6 +41,7 @@ const Menu = ({ username }) => {
                 <div className="
                 rounded-full
                 m-auto
+                mb-2
                 w-32
                 h-32
                 bg-gray-100
@@ -52,10 +53,9 @@ const Menu = ({ username }) => {
             <ul>
                 <LiGray>Configurações</LiGray>
                 <LiWhite>Perfil</LiWhite>
-                <LiGray>Ajuda</LiGray>
-                <LiWhite>Loja</LiWhite>
+                <LiGray>Estatísticas</LiGray>
+                <LiWhite>Ajuda</LiWhite>
                 <LiGray>Home</LiGray>
-                <LiWhite>Lorem Ipsum</LiWhite>
             </ul>
         </nav>
     )
