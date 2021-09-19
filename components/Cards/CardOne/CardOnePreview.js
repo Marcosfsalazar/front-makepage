@@ -1,12 +1,12 @@
 import Icons from "../../Icons/Icons";
 
-const CardOneEdit = (data) => {
+const CardOneEdit = ({ data }) => {
 
     return(
         <div
             className="
                 bg-black
-                w-8/12
+                w-3/6
                 h-80
                 flex
                 shadow-md"

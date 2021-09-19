@@ -30,9 +30,9 @@ const Icons = ({className, logosClass, logos}) => {
     return (
         <div className={className}>
             { logos &&
-                logos.map(logo => {
+                logos.map((logo, index) => {
                     const ComponentName = Map[logo.name];
-                    return <a key={logo.link}  href={logo.link} className={logosClass}><ComponentName{...logo} color="white" size="28"/></a>
+                    return <a key={`${logo.link}${index}`}  href={logo.link} className={logosClass}><ComponentName{...logo} color="white" size="28"/></a>
                 })
             }
         </div>

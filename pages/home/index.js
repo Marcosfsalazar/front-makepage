@@ -6,11 +6,10 @@ import Link from "next/link";
 export default function Home(){
     const router = useRouter();
     const [{ user }, loading] = useSession()
-    console.log(user);
     return (
         <>
             <section className="flex h-auto">
-                <Menu username={ user?.username }/>
+                <Menu/>
                 <main className="bg-white w-full flex-col">
                     <div
                         className="

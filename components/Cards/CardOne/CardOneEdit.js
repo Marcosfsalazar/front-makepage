@@ -1,9 +1,9 @@
 import Icons from "../../Icons/Icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Button from "../../Button";
 import { SOCIALS } from "../../../utils/socials"
 
-const CardOneEdit = () => {
+const CardOneEdit = ({ setData }) => {
     const [name, setName] = useState('Seu nome Aqui');
     const [title, setTitle] = useState('seu título aqui')
     const [about, setAbout] = useState('Sobre')
@@ -12,11 +12,15 @@ const CardOneEdit = () => {
     const [link, setLink] = useState("");
     const [actualSelect, setActualSelect] = useState("twitter");
     const [fieldsetVisible, setFieldsetVisible] = useState(false);
+    useEffect(() => {
+        setData({
+            name,title,about,desc,logos,link,actualSelect
+        })
+    },[name,title,about,desc,logos,link,actualSelect])
     const handleSaveLogos = (name, link) => {
         setLogos(logos => [{name:name, link:link},...logos]);
         return setFieldsetVisible(false);
     }
-    console.log(logos)
     return(
         <div
             className="

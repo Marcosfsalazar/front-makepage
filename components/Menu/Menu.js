@@ -1,3 +1,6 @@
+import {useSession} from "next-auth/client";
+import Link from 'next/link'
+
 const LiGray = ({ children }) => {
     return (
         <li
@@ -24,7 +27,8 @@ const LiWhite = ({ children }) => {
     )
 }
 
-const Menu = ({ username }) => {
+const Menu = () => {
+    const [{user}] = useSession();
     return (
         <nav className="bg-gray-300 w-1/4 h-screen flex-col">
             <div className="
@@ -48,14 +52,14 @@ const Menu = ({ username }) => {
                 self-center"
                 >
                 </div>
-                <span>{ username }</span>
+                <span>{ user.username }</span>
             </div>
             <ul>
                 <LiGray>Configurações</LiGray>
                 <LiWhite>Perfil</LiWhite>
                 <LiGray>Estatísticas</LiGray>
                 <LiWhite>Ajuda</LiWhite>
-                <LiGray>Home</LiGray>
+                <LiGray><Link className="cursor-pointer" href="/home">Home</Link></LiGray>
             </ul>
         </nav>
     )
