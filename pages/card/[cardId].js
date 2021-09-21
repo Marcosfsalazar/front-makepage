@@ -1,13 +1,39 @@
 import createApolloClient from "../../lib/apolloClient";
-import { gql } from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 import Icons from "../../components/Icons/Icons";
+import {dadoQuery} from "../../lib/queries/dadosQueries";
+import {useEffect} from "react";
+import {updateDado} from "../../lib/mutations/dadoMutation";
 
 const Card = ({ data }) => {
     const { card } = data;
     console.log(card)
+    const [updtDado] = useMutation(updateDado);
     if(!card){
         return "Loading...";
     }
+    const { data: dado, loading } = useQuery(dadoQuery,{
+        variables:{
+            id: parseInt(card.dadoId)
+        }
+    })
+    useEffect(() => {
+        if(dado && card){
+            updtDado({
+                variables:{
+                    input:{
+                        where: {
+                            id: parseInt(card.dadoId),
+                        },
+                        data:{
+                            visits: parseInt(dado.dado.visits) + 1
+                        }
+                    }
+                }
+            }).then(() => console.log("Welcome!"))
+                .catch(e => console.log(JSON.stringify(e)))
+        }
+    },[dado])
     return (
         <div className="w-screen h-screen flex items-center justify-center bg-yellow-300">
             <div
@@ -70,13 +96,14 @@ const Card = ({ data }) => {
     )
 }
 
-Card.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
     const client = createApolloClient();
     const {cardId} = ctx.query
         const { data } = await client.query({
             query: gql`
                 query card($id: ID!){
                     card(id: $id){
+                        dadoId
                         data
                     }
                 }
@@ -85,7 +112,7 @@ Card.getInitialProps = async (ctx) => {
                 id: parseInt(cardId),
             }
         })
-    return { data }
+    return { props: { data } }
 }
 
 export default Card;

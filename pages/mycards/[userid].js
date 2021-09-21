@@ -6,8 +6,9 @@ import CardOneUpdate from "../../components/Cards/CardOne/cardOneUpdate";
 import {useEffect, useState} from "react";
 import {deleteCard} from "../../lib/mutations/cardMutation";
 import {toast} from "react-toastify";
+import Button from "../../components/Button";
 
-const MyCards = ({ data }) => {
+const MyCards = ({ userid, data }) => {
     const [openCardUpdate, setOpenCardUpdate] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [cardList, setCardList] = useState([]);
@@ -35,11 +36,11 @@ const MyCards = ({ data }) => {
             .then(async (response) => {
                 if(response){
                     toast.configure()
-                    toast('Salvo com sucesso!',{
+                    toast('Excluido com sucesso!',{
                         position: "bottom-center",
                         autoClose: 3000,
                         closeOnClick: true,
-                        type: "success",
+                        type: "info",
                     })
                 }
             })
@@ -67,20 +68,26 @@ const MyCards = ({ data }) => {
         <div className="flex">
            <Menu/>
             <section className="flex w-full flex-col">
-                <h1
+                <nav
                     className="
-                    w-full
-                    text-center
-                    font-bold
-                    italic
-                    font-mono
-                    text-4xl
-                    h-10
-                    border-b-4
-                    mt-4"
+                        bg-white
+                        w-full
+                        flex
+                        justify-center
+                    "
                 >
-                    MY CARDS
-                </h1>
+                    <Link href={`/dashboard/cards/${userid}`}>
+                        <Button className="m-2">Dashboard</Button>
+                    </Link>
+                    <Link href={`/builder/card/${userid}`}>
+                        <Button className="m-2">New Card</Button>
+                    </Link>
+                    <Link href={`/mycards/${userid}`}>
+                        <Button className="m-2">My Cards</Button>
+                    </Link>
+                </nav>
+                <section className="w-full h-1 bg-gray-400 flex justify-center items-center">
+                </section>
                 <section className="w-full h-full">
                     <ul className="mt-8 mb-8">
                         {cards &&

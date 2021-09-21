@@ -59,7 +59,7 @@ export default function Home(){
                             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                             Ut enim ad minim veniam, quis
                         </p>
-                        <Link href={`/builder/card/${user?.id}?username=${user?.username}`}>
+                        <Link href={`/builder/card/${user?.id}`}>
                             <button
                                 className="
                                     bg-gray-100
@@ -82,8 +82,9 @@ export default function Home(){
                                 </span>
                             </button>
                         </Link>
-                        <button
-                            className="
+                        <Link href={`/builder/curriculum/${user?.id}`}>
+                            <button
+                                className="
                                 bg-gray-100
                                 w-full
                                 h-32
@@ -93,7 +94,7 @@ export default function Home(){
                                 border-dotted
                                 text-center
                             "
-                        >
+                            >
                             <span
                                 className="
                                 text-2xl
@@ -102,7 +103,9 @@ export default function Home(){
                             >
                                 Virtual Curriculum
                             </span>
-                        </button>
+                            </button>
+
+                        </Link>
                     </section>
                 </main>
             </section>

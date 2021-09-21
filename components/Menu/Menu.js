@@ -1,5 +1,9 @@
-import {useSession} from "next-auth/client";
+import {signOut, useSession} from "next-auth/client";
 import Link from 'next/link'
+import Button from "../Button";
+import React from "react";
+import {useRouter} from "next/router";
+import { url_picture } from "../../lib/constants";
 
 const LiGray = ({ children }) => {
     return (
@@ -29,6 +33,19 @@ const LiWhite = ({ children }) => {
 
 const Menu = () => {
     const [{user}] = useSession();
+    const router = useRouter();
+    const handleLogout = (e) => {
+        e.preventDefault()
+        signOut({
+            redirect: false,
+        })
+            .then(() => {
+                router.push('/')
+            })
+            .catch(e => {
+                throw new Error(e)
+            })
+    }
     return (
         <nav className="bg-gray-300 w-1/4 h-screen flex-col">
             <div className="
@@ -42,7 +59,7 @@ const Menu = () => {
             px-4
             py-8
             ">
-                <div className="
+                <img className="
                 rounded-full
                 m-auto
                 mb-2
@@ -50,16 +67,21 @@ const Menu = () => {
                 h-32
                 bg-gray-100
                 self-center"
+                src={url_picture}
                 >
-                </div>
+                </img>
                 <span>{ user.username }</span>
             </div>
             <ul>
-                <LiGray>Configurações</LiGray>
-                <LiWhite>Perfil</LiWhite>
-                <LiGray>Estatísticas</LiGray>
-                <LiWhite>Ajuda</LiWhite>
+                <LiWhite><Link className="cursor-pointer" href="/profile">Perfil</Link></LiWhite>
                 <LiGray><Link className="cursor-pointer" href="/home">Home</Link></LiGray>
+                <LiWhite>
+                    <button
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+                </LiWhite>
             </ul>
         </nav>
     )

@@ -2,6 +2,7 @@ import Icons from "../../Icons/Icons";
 import {useEffect, useState} from "react";
 import Button from "../../Button";
 import { SOCIALS } from "../../../utils/socials"
+import {url_picture} from "../../../lib/constants";
 
 const CardOneEdit = ({ setData }) => {
     const [name, setName] = useState('Seu nome Aqui');
@@ -10,11 +11,13 @@ const CardOneEdit = ({ setData }) => {
     const [desc, setDesc] = useState('Insira uma descrição...')
     const [logos, setLogos] = useState([]);
     const [link, setLink] = useState("");
+    const [modalImg, setModalImg] = useState(false);
+    const [imgLink, setImgLink] = useState(url_picture);
     const [actualSelect, setActualSelect] = useState("twitter");
     const [fieldsetVisible, setFieldsetVisible] = useState(false);
     useEffect(() => {
         setData({
-            name,title,about,desc,logos,link,actualSelect
+            name,title,about,desc,logos,link,actualSelect, imgLink
         })
     },[name,title,about,desc,logos,link,actualSelect])
     const handleSaveLogos = (name, link) => {
@@ -37,8 +40,18 @@ const CardOneEdit = ({ setData }) => {
                         mb-1
                         w-32
                         h-32
+                        flex
+                        items-center
+                        justify-center
                         bg-gray-100"
-                />
+                >
+                    <button
+                        className="w-20 h-20 flex items-center justify-center"
+                        onClick={() => setModalImg(true)}
+                    >
+                        +
+                    </button>
+                </div>
                 <input
                     className="
                     text-white
@@ -124,6 +137,33 @@ const CardOneEdit = ({ setData }) => {
                     />
                 </div>
             </div>
+            {modalImg &&
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <fieldset className="bg-gray-200 w-1/4 h-1/4 text-center rounded flex flex-col items-center justify-center">
+                    <div className="font-semibold mt-2">Insira o Link de uma imagem:</div>
+                    <input
+                        className="w-30 text-white bg-black rounded"
+                        id="url"
+                        value={imgLink}
+                        onChange={e => setImgLink(e.target.value)}
+                    />
+                    <div className="flex">
+                        <Button
+                            className="h-6 text-sm bg-red-500 flex items-center mx-1 mt-2"
+                            onClick={() => setModalImg(false)}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                            className="h-6 text-sm bg-green-500 flex items-center mx-1 mt-2"
+                            onClick={() => handleSaveLogos(actualSelect, link)}
+                        >
+                            Salvar
+                        </Button>
+                    </div>
+                </fieldset>
+            </div>
+            }
         </div>
     )
 }

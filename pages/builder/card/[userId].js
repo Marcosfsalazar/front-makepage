@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import CardOnePreview from "../../../components/Cards/CardOne/CardOnePreview";
 import Link from 'next/link';
+import {createDado} from "../../../lib/mutations/dadoMutation";
 
 const CardBuilder = ({ data }) => {
     const {username, userId} = data;
@@ -15,31 +16,47 @@ const CardBuilder = ({ data }) => {
     const [openPreview, setOpenPreview] = useState(false);
     const [link, setLink] = useState('')
     const [saveCard] = useMutation(createCard)
+    const [saveDado] = useMutation(createDado)
     const handleSaveCard = (cardData) => {
-            saveCard({
+            saveDado({
                 variables:{
                     input:{
                         data:{
-                            userId: parseInt(userId),
-                            data:{
-                                cardData
-                            }
+                            visits: 0
                         }
                     }
                 }
             })
                 .then(async (response) => {
-                    if(response){
-                        console.log(response)
-                        toast.configure()
-                        toast('Salvo com sucesso!',{
-                            position: "bottom-center",
-                            autoClose: 3000,
-                            closeOnClick: true,
-                            type: "success",
+                    saveCard({
+                        variables:{
+                            input:{
+                                data:{
+                                    dadoId: parseInt(response.data.createDado.dado.id),
+                                    userId: parseInt(userId),
+                                    data:{
+                                        cardData
+                                    }
+                                }
+                            }
+                        }
+                    })
+                        .then(async (response) => {
+                            if(response){
+                                console.log(response)
+                                toast.configure()
+                                toast('Salvo com sucesso!',{
+                                    position: "bottom-center",
+                                    autoClose: 3000,
+                                    closeOnClick: true,
+                                    type: "success",
+                                })
+                                setLink(response.data.createCard.card.id);
+                            }
                         })
-                        setLink(response.data.createCard.card.id);
-                    }
+                        .catch(e => {
+                            console.log(e)
+                        })
                 })
                 .catch(e => {
                     console.log(e)
@@ -58,7 +75,9 @@ const CardBuilder = ({ data }) => {
                         justify-center
                     "
                 >
-                    <Button className="m-2">Dashboard</Button>
+                    <Link href={`/dashboard/cards/${userId}`}>
+                        <Button className="m-2">Dashboard</Button>
+                    </Link>
                     <Button className="m-2">New Card</Button>
                     <Link href={`/mycards/${userId}`}>
                         <Button className="m-2">My Cards</Button>
