@@ -81,7 +81,7 @@ const CurriculumBuilder = ({ data }) => {
                         justify-center
                     "
                 >
-                    <Link href={`dashboard/curriculums/${userId}`}>
+                    <Link href={`/dashboard/curriculums/${userId}`}>
                         <Button className="m-2">Dashboard</Button>
                     </Link>
                     <Link href={`/builder/curriculum/${userId}`}>

@@ -12,15 +12,27 @@ const CardOneEdit = ({ data }) => {
                 shadow-md"
         >
             <div className="flex flex-col items-center w-1/3">
-                <img className="
+                {data?.img?.imgLink ?
+                    <img className="
                         rounded-full
                         mt-6
                         mb-1
                         w-32
                         h-32
                         bg-gray-100"
-                     src={data.img.imgLink}
-                />
+                         src={data?.img?.imgLink}
+                         alt="profile picture"
+                    />
+                    :
+                    <div className="
+                        rounded-full
+                        mt-6
+                        mb-1
+                        w-32
+                        h-32
+                        bg-gray-100"
+                    />
+                }
                 <div
                     className="
                     text-white

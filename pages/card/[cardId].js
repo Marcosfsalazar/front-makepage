@@ -55,7 +55,7 @@ const Card = ({ data }) => {
                             2xl:w-52
                             2xl:h-52
                             bg-gray-100"
-                         src={card?.data?.cardData?.img.imgLink}
+                         src={card?.data?.cardData?.img?.imgLink}
                     />
                     <div
                         className="
