@@ -16,6 +16,7 @@ const Curriculum = (data) => {
             id: parseInt(data.curriculum.dadoId)
         }
     })
+    console.log('curr', curriculum)
     useEffect(() => {
         if(dado && curriculum){
             console.log(dado)
@@ -34,9 +35,18 @@ const Curriculum = (data) => {
                 .catch(e => console.log(JSON.stringify(e)))
         }
     },[dado])
+    const theme = curriculum.theme === 'black' ? {
+        mainColor: 'black',
+        secondaryColor:'gray-600',
+        textColor: 'white',
+    } :{
+        mainColor: 'gray-200',
+        secondaryColor:'white',
+        textColor: 'black',
+    }
     return (
-        <div className="w-screen h-screen flex items-center bg-white">
-            <section className="bg-gray-400 w-2/5 h-screen flex-col">
+        <div className={`w-screen h-screen flex items-center bg-${theme.secondaryColor} text-${theme.textColor}`}>
+            <section className={`bg-${theme.mainColor} w-2/5 h-screen flex-col`}>
                 <div className="
                     flex-col
                     text-center
@@ -58,6 +68,7 @@ const Curriculum = (data) => {
                         bg-gray-100
                         self-center"
                          src={curriculum.image.imgLink}
+                         alt="profile pic"
                             />
                         <span className="font-bold 2xl:text-2xl block">{curriculum.name}</span>
                         <span className="text-xs 2xl:text-sm font-mono">{curriculum.degree}</span>

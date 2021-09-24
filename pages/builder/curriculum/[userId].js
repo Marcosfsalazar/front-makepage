@@ -227,13 +227,6 @@ const CurriculumBuilder = ({ data }) => {
                                                                     name={`experience.${index}.desc`}
                                                                     className="border m-2 block"
                                                                 />
-                                                                <label htmlFor={`experience.${index}.time`}>Tempo*(em meses)</label>
-                                                                <Field
-                                                                    type="text"
-                                                                    name={`experience.${index}.time`}
-                                                                    className="border m-2 block"
-                                                                    required
-                                                                />
                                                                 <div className="flex ml-2">
                                                                     <button
                                                                         type="button"
