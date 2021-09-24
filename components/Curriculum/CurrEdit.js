@@ -6,14 +6,31 @@ import {toast} from "react-toastify";
 import {useMutation, useQuery} from "@apollo/client";
 import {updateCurriculum} from "../../lib/mutations/curriculumMutation";
 import {currQuery} from "../../lib/queries/CurrQueries";
+import {useEffect, useState} from "react";
 
 const CurrEdit = ({ currId, userId, setOpenModal }) => {
-    const [updtCurriculum] = useMutation(updateCurriculum)
+    const [updtCurriculum] = useMutation(updateCurriculum);
+    const [img, setImg] = useState();
+    const imageHandler = (e) => {
+        const reader = new FileReader(e);
+        reader.onload = () => {
+            if(reader.readyState === 2 ){
+                setImg({imgLink: reader.result})
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
+    }
     const { data, loading } = useQuery(currQuery,{
         variables:{
             currId: parseInt(currId)
         }
     })
+    useEffect(() => {
+        setImg({imgLink:data?.curriculum?.data?.image?.imgLink})
+    },[data])
+    if(loading){
+        return "loading..."
+    }
     const handleUpdateCurriculum = (curriculumData) => {
         updtCurriculum({
             variables:{
@@ -24,7 +41,8 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                     data:{
                         userId: parseInt(userId),
                         data:{
-                            curriculumData
+                            ...curriculumData,
+                            image: img
                         }
                     }
                 }
@@ -53,14 +71,14 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                 <section className="flex justify-center">
                     <Formik
                         initialValues={{
-                            name: data?.curriculum.data?.curriculumData.name,
-                            degree: data?.curriculum.data?.curriculumData.degree,
-                            study: data?.curriculum.data?.curriculumData.study,
-                            skills:data?.curriculum.data?.curriculumData.skills,
-                            experience:data?.curriculum.data?.curriculumData.experience,
-                            personalDesc: data?.curriculum.data?.curriculumData.personalDesc,
-                            contact:data?.curriculum.data?.curriculumData.contact,
-                            theme: data?.curriculum.data?.curriculumData.theme
+                            name: data?.curriculum.data?.name,
+                            degree: data?.curriculum.data?.degree,
+                            study: data?.curriculum.data?.study,
+                            skills:data?.curriculum.data?.skills,
+                            experience:data?.curriculum.data?.experience,
+                            personalDesc: data?.curriculum.data?.personalDesc,
+                            contact:data?.curriculum.data?.contact,
+                            theme: data?.curriculum.data?.theme
                         }}
                         onSubmit={(values) => {
                             console.log(values)
@@ -75,6 +93,15 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                                 className="flex-col items-center justify-center"
                                 onSubmit={handleSubmit}
                             >
+                                <div className="overflow-hidden w-28">
+                                    <label htmlFor="image">Trocar Foto (limit 700kb)</label>
+                                        <input
+                                            name="image"
+                                            type="file"
+                                            className="border m-2 block"
+                                            onChange={imageHandler}
+                                        />
+                                </div>
                                 <div>
                                     <label htmlFor="name">Nome</label>
                                     <Field
@@ -268,7 +295,7 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                                             name="contact"
                                             render={arrayHelpers =>(
                                                 <div>
-                                                    { values.contact && values.contact.length > 0 ? (
+                                                    { values.contact && values?.contact?.length > 0 ? (
                                                         values.contact.map((skill, index) => (
                                                                 <div key={index}>
                                                                     <label htmlFor={`contact.${index}.mail`}>e-mail</label>

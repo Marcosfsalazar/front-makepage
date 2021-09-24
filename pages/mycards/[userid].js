@@ -40,7 +40,7 @@ const MyCards = ({ userid, data }) => {
                         position: "bottom-center",
                         autoClose: 3000,
                         closeOnClick: true,
-                        type: "info",
+                        type: "error",
                     })
                 }
             })

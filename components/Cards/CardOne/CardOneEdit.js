@@ -11,13 +11,21 @@ const CardOneEdit = ({ setData }) => {
     const [desc, setDesc] = useState('Insira uma descrição...')
     const [logos, setLogos] = useState([]);
     const [link, setLink] = useState("");
-    const [modalImg, setModalImg] = useState(false);
-    const [imgLink, setImgLink] = useState(url_picture);
+    const [img, setImg] = useState();
     const [actualSelect, setActualSelect] = useState("twitter");
     const [fieldsetVisible, setFieldsetVisible] = useState(false);
+    const imageHandler = (e) => {
+        const reader = new FileReader(e);
+        reader.onload = () => {
+            if(reader.readyState === 2 ){
+                setImg({imgLink: reader.result})
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
+    }
     useEffect(() => {
         setData({
-            name,title,about,desc,logos,link,actualSelect, imgLink
+            name,title,about,desc,logos,link,actualSelect,img
         })
     },[name,title,about,desc,logos,link,actualSelect])
     const handleSaveLogos = (name, link) => {
@@ -34,7 +42,8 @@ const CardOneEdit = ({ setData }) => {
                 shadow-md"
         >
             <div className="flex flex-col items-center w-1/3">
-                <div className="
+                { img ?
+                    <img className="
                         rounded-full
                         mt-6
                         mb-1
@@ -44,14 +53,48 @@ const CardOneEdit = ({ setData }) => {
                         items-center
                         justify-center
                         bg-gray-100"
+                         src={img?.imgLink}
+                         alt="profile image"
+                    />
+                    :
+                    <div className="
+                        rounded-full
+                        mt-6
+                        mb-1
+                        w-32
+                        h-32
+                        flex
+                        items-center
+                        justify-center
+                        bg-gray-100"
+                    />
+
+                }
+                <label
+                    className="
+                        border-2
+                        border-gray-500
+                        rounded
+                        flex
+                        z-50
+                        bg-white
+                        mt-50
+                        top-64
+                        cursor-pointer
+                        hover:bg-gray-100
+                        absolute
+                        items-center
+                        justify-center
+                    "
                 >
-                    <button
-                        className="w-20 h-20 flex items-center justify-center"
-                        onClick={() => setModalImg(true)}
-                    >
-                        +
-                    </button>
-                </div>
+                    <input
+                        className="
+                        hidden"
+                        type="file"
+                        onChange={imageHandler}
+                    />
+                    add file
+                </label>
                 <input
                     className="
                     text-white
@@ -137,33 +180,6 @@ const CardOneEdit = ({ setData }) => {
                     />
                 </div>
             </div>
-            {modalImg &&
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <fieldset className="bg-gray-200 w-1/4 h-1/4 text-center rounded flex flex-col items-center justify-center">
-                    <div className="font-semibold mt-2">Insira o Link de uma imagem:</div>
-                    <input
-                        className="w-30 text-white bg-black rounded"
-                        id="url"
-                        value={imgLink}
-                        onChange={e => setImgLink(e.target.value)}
-                    />
-                    <div className="flex">
-                        <Button
-                            className="h-6 text-sm bg-red-500 flex items-center mx-1 mt-2"
-                            onClick={() => setModalImg(false)}
-                        >
-                            Cancelar
-                        </Button>
-                        <Button
-                            className="h-6 text-sm bg-green-500 flex items-center mx-1 mt-2"
-                            onClick={() => handleSaveLogos(actualSelect, link)}
-                        >
-                            Salvar
-                        </Button>
-                    </div>
-                </fieldset>
-            </div>
-            }
         </div>
     )
 }

@@ -87,6 +87,7 @@ const MyCurriculums = ({ userId, data }) => {
                 <ul className="mt-8 mb-8">
                     {curricula &&
                     curricula?.map((curriculum, index) => {
+                        console.log(curriculum)
                         return(
                             <li key={index} className="
                                     px-2
@@ -98,7 +99,7 @@ const MyCurriculums = ({ userId, data }) => {
                                     justify-between
                                     h-12">
                                 <h1 className="font-bold">{ index }</h1>
-                                <span>{curriculum?.data?.curriculumData?.name}</span>
+                                <span>{curriculum?.data?.name}</span>
                                 <span className="flex">
                                             <h1 className="font-bold px-2">criado:</h1>
                                             <span>{handleData(curriculum.created_at)}</span>

@@ -7,12 +7,23 @@ import {toast} from "react-toastify";
 import {useMutation} from "@apollo/client";
 import {createCurriculum} from "../../../lib/mutations/curriculumMutation";
 import {createDado} from "../../../lib/mutations/dadoMutation";
+import {useState} from "react";
 
 const CurriculumBuilder = ({ data }) => {
     const { userId } = data;
     console.log(data)
     const [saveCurriculum] = useMutation(createCurriculum)
     const [saveDado] = useMutation(createDado)
+    const [img, setImg] = useState();
+    const imageHandler = (e) => {
+        const reader = new FileReader(e);
+        reader.onload = () => {
+            if(reader.readyState === 2 ){
+                setImg({imgLink: reader.result})
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
+    }
     const handleSaveCurriculum = (curriculumData) => {
         saveDado({
             variables:{
@@ -31,7 +42,8 @@ const CurriculumBuilder = ({ data }) => {
                                 dadoId: parseInt(response.data.createDado.dado.id),
                                 userId: parseInt(userId),
                                 data:{
-                                    curriculumData
+                                        ...curriculumData,
+                                        image: img
                                 }
                             }
                         }
@@ -69,8 +81,12 @@ const CurriculumBuilder = ({ data }) => {
                         justify-center
                     "
                 >
-                    <Button className="m-2">Dashboard</Button>
-                    <Button className="m-2">New Curriculum</Button>
+                    <Link href={`dashboard/curriculums/${userId}`}>
+                        <Button className="m-2">Dashboard</Button>
+                    </Link>
+                    <Link href={`/builder/curriculum/${userId}`}>
+                        <Button className="m-2">New Curriculum</Button>
+                    </Link>
                     <Link href={`/mycurriculums/${userId}`}>
                         <Button className="m-2">My Curriculums</Button>
                     </Link>
@@ -103,6 +119,15 @@ const CurriculumBuilder = ({ data }) => {
                                 className="flex-col items-center justify-center"
                                 onSubmit={handleSubmit}
                             >
+                                <div>
+                                    <label htmlFor="image">Foto</label>
+                                    <input
+                                        name="image"
+                                        type="file"
+                                        className="border m-2 block"
+                                        onChange={imageHandler}
+                                    />
+                                </div>
                                 <div>
                                     <label htmlFor="name">Nome</label>
                                     <Field
@@ -187,7 +212,7 @@ const CurriculumBuilder = ({ data }) => {
                                         name="experience"
                                         render={arrayHelpers =>(
                                             <div>
-                                                { values.experience && values.experience.length > 0 ? (
+                                                { values.experience && values?.experience?.length > 0 ? (
                                                     values.experience.map((skill, index) => (
                                                             <div key={index}>
                                                                 <label htmlFor={`experience.${index}.local`}>Local*</label>
@@ -248,7 +273,7 @@ const CurriculumBuilder = ({ data }) => {
                                         name="skills"
                                         render={arrayHelpers =>(
                                             <div>
-                                                { values.skills && values.skills.length > 0 ? (
+                                                { values.skills && values?.skills?.length > 0 ? (
                                                     values.skills.map((skill, index) => (
                                                             <div key={index}>
                                                                 <label htmlFor={`skills.${index}.skill`}>Habilidade*</label>
@@ -296,7 +321,7 @@ const CurriculumBuilder = ({ data }) => {
                                             name="contact"
                                             render={arrayHelpers =>(
                                                 <div>
-                                                    { values.contact && values.contact.length > 0 ? (
+                                                    { values.contact && values?.contact?.length > 0 ? (
                                                         values.contact.map((skill, index) => (
                                                                 <div key={index}>
                                                                     <label htmlFor={`contact.${index}.mail`}>e-mail</label>

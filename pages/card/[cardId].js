@@ -12,6 +12,7 @@ const Card = ({ data }) => {
     if(!card){
         return "Loading...";
     }
+    console.log(card)
     const { data: dado, loading } = useQuery(dadoQuery,{
         variables:{
             id: parseInt(card.dadoId)
@@ -46,7 +47,7 @@ const Card = ({ data }) => {
                     shadow-lg"
             >
                 <div className="flex flex-col items-center self-center mb-6 pt-0 2xl:self-center 2xl:mb-20 w-1/3">
-                    <div className="
+                    <img className="
                             rounded-full
                             mb-1
                             w-32
@@ -54,6 +55,7 @@ const Card = ({ data }) => {
                             2xl:w-52
                             2xl:h-52
                             bg-gray-100"
+                         src={card?.data?.cardData?.img.imgLink}
                     />
                     <div
                         className="

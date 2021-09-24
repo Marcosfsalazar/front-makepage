@@ -4,10 +4,10 @@ import {updateDado} from "../../lib/mutations/dadoMutation";
 import {dadoQuery} from "../../lib/queries/dadosQueries";
 import {useEffect} from "react";
 
-const Curriculum = ({ data }) => {
-    const  curriculum  = data?.curriculum?.data.curriculumData
+const Curriculum = (data) => {
+    const  curriculum  = data?.curriculum?.data
     const [updtDado] = useMutation(updateDado);
-    console.log(curriculum)
+    console.log('data', data)
     if(!curriculum){
         return "Loading...";
     }
@@ -47,7 +47,7 @@ const Curriculum = ({ data }) => {
                     px-4
                     py-8
                     ">
-                    <div className="
+                    <img className="
                         rounded-full
                         m-auto
                         mb-2
@@ -57,10 +57,11 @@ const Curriculum = ({ data }) => {
                         2xl:h-60
                         bg-gray-100
                         self-center"
+                         src={curriculum.image.imgLink}
                             />
                         <span className="font-bold 2xl:text-2xl block">{curriculum.name}</span>
                         <span className="text-xs 2xl:text-sm font-mono">{curriculum.degree}</span>
-                    { curriculum.contact.length > 0 &&
+                    { curriculum?.contact?.length > 0 &&
                         <ul className="pt-4 2xl:text-xl">
                             <div className="font-bold font-mono 2xl:text-2xl">Contato</div>
                             {
@@ -87,7 +88,7 @@ const Curriculum = ({ data }) => {
                             }
                         </ul>
                     }
-                    { curriculum.skills.length > 0 &&
+                    { curriculum?.skills?.length > 0 &&
                         <ul className="pt-4 2xl:text-xl">
                             <div className="font-bold font-mono 2xl:text-2xl">Skills</div>
                             {
@@ -114,7 +115,7 @@ const Curriculum = ({ data }) => {
                         </p>
                     </div>
                 }
-                { curriculum.study.length > 0 &&
+                { curriculum?.study?.length > 0 &&
                     <div className="mt-2">
                         <span className="font-bold text-xl 2xl:text-2xl">Formação Acadêmica</span>
                         <ul className="py-1 px-4">
@@ -131,7 +132,7 @@ const Curriculum = ({ data }) => {
                         </ul>
                     </div>
                 }
-                {curriculum.experience.length > 0 &&
+                {curriculum?.experience?.length > 0 &&
                     <div className="mt-2">
                         <span className="font-bold text-xl 2xl:text-2xl">Experiência</span>
                         <ul className="py-1 px-4">
@@ -169,7 +170,8 @@ export const getServerSideProps = async (ctx) => {
             id: parseInt(curriculumId),
         }
     })
-    return { props: { data } }
+    console.log(data)
+    return { props: data }
 }
 
 export default Curriculum;

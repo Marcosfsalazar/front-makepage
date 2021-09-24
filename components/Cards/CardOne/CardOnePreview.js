@@ -19,7 +19,7 @@ const CardOneEdit = ({ data }) => {
                         w-32
                         h-32
                         bg-gray-100"
-                     src={data.imgLink}
+                     src={data.img.imgLink}
                 />
                 <div
                     className="

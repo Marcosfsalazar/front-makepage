@@ -20,17 +20,27 @@ const CardOneUpdate = ({ cardId, setOpenCard }) => {
     const [link, setLink] = useState("");
     const [actualSelect, setActualSelect] = useState("twitter");
     const [fieldsetVisible, setFieldsetVisible] = useState(false);
-    console.log(cardData)
+    const [img, setImg] = useState();
     useEffect(() => {
         setCardData(data?.card.data.cardData);
         setLogos(data?.card.data.cardData.logos);
-    },[loading])
+        setImg({imgLink:data?.card.data.cardData.img.imgLink})
+    },[data])
     useEffect(() => {
         setCardData(data  => ({...data, logos}))
     },[logos])
     const handleSaveLogos = (name, link) => {
         setLogos(logos => [{name:name, link:link},...logos]);
         return setFieldsetVisible(false);
+    }
+    const imageHandler = (e) => {
+        const reader = new FileReader(e);
+        reader.onload = () => {
+            if(reader.readyState === 2 ){
+                setImg({imgLink: reader.result})
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
     }
     const handleUpdateCards = (newData) => {
         updtCard({
@@ -41,7 +51,7 @@ const CardOneUpdate = ({ cardId, setOpenCard }) => {
                     },
                     data:{
                         data:{
-                            cardData: newData
+                            cardData: {...newData, img: {...img}}
                         }
                     }
                 }
@@ -80,14 +90,41 @@ const CardOneUpdate = ({ cardId, setOpenCard }) => {
                 shadow-md"
             >
                 <div className="flex flex-col items-center w-1/3">
-                    <div className="
+                    <img className="
                         rounded-full
                         mt-6
                         mb-1
                         w-32
                         h-32
                         bg-gray-100"
+                         src={img?.imgLink}
+                         alt="profile picture"
                     />
+                    <label
+                        className="
+                        border-2
+                        border-gray-500
+                        rounded
+                        flex
+                        z-50
+                        bg-white
+                        mt-50
+                        top-64
+                        cursor-pointer
+                        hover:bg-gray-100
+                        absolute
+                        items-center
+                        justify-center
+                    "
+                    >
+                        <input
+                            className="
+                        hidden"
+                            type="file"
+                            onChange={imageHandler}
+                        />
+                        add file
+                    </label>
                     <input
                         className="
                     text-white
