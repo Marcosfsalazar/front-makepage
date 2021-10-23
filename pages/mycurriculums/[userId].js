@@ -1,20 +1,36 @@
+import { useEffect } from "react";
 import Menu from "../../components/Menu/Menu";
 import createApolloClient from "../../lib/apolloClient";
-import {gql, useMutation} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 import Link from "next/link"
 import {toast} from "react-toastify";
 import {deleteCurriculum} from "../../lib/mutations/curriculumMutation";
 import {useState} from "react";
-import CardOneUpdate from "../../components/Cards/CardOne/cardOneUpdate";
 import CurrEdit from "../../components/Curriculum/CurrEdit";
 import Button from "../../components/Button";
+import {GET_CARDS} from "../../lib/queries/cardQueries";
+import {GET_CURRS} from "../../lib/queries/CurrQueries";
 
-const MyCurriculums = ({ userId, data }) => {
-    const {curricula} = data;
+const MyCurriculums = ({ userId }) => {
+    const { data, loading } = useQuery(GET_CURRS, {
+        variables:{
+            userId: parseInt(userId),
+        }
+    })
+    const [curricula, setCurricula] = useState();
     const [openModal, setOpenModal] = useState(false);
     const [openCurrUpdate, setOpenCurrUpdate] = useState(false)
     const [curriculumId, setCurriculumId] = useState();
-    const [deleteOneCurriculum] = useMutation(deleteCurriculum);
+    const [deleteOneCurriculum] = useMutation(deleteCurriculum, {
+        refetchQueries:[
+            {
+                query: GET_CURRS,
+                variables:{
+                    userId: parseInt(userId),
+                }
+            }
+        ]
+    });
     const handleDelete = (id) => {
         deleteOneCurriculum({
             variables:{
@@ -59,6 +75,12 @@ const MyCurriculums = ({ userId, data }) => {
     const handleData = (data) => {
         const date= new Date(Date.parse(data));
         return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`)
+    }
+   useEffect(() => {
+        setCurricula(data?.curricula);
+    },[data])
+    if(loading || !data){
+        return <>loading...</>
     }
     return (
         <div className="flex">
@@ -245,25 +267,11 @@ const MyCurriculums = ({ userId, data }) => {
     )
 }
 
-MyCurriculums.getInitialProps = async (ctx) => {
-    const client = createApolloClient();
+export async function getServerSideProps (ctx) {
     const {userId} = ctx.query;
-    console.log(userId)
-    const { data } = await client.query({
-        query: gql`
-            query curricula($userId: Int){
-                curricula(where:{userId: $userId}){
-                    id
-                    created_at
-                    data
-                }
-            }
-        `,
-        variables:{
-            userId: parseInt(userId),
-        }
-    })
-    return { userId, data }
+    return {
+        props:{ userId }
+    }
 }
 
 MyCurriculums.auth = true;

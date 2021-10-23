@@ -24,7 +24,7 @@ const CardOneUpdate = ({ cardId, setOpenCard }) => {
     useEffect(() => {
         setCardData(data?.card.data.cardData);
         setLogos(data?.card.data.cardData.logos);
-        setImg({imgLink:data?.card.data.cardData.img.imgLink})
+        setImg({imgLink:data?.card?.data?.cardData?.img?.imgLink})
     },[data])
     useEffect(() => {
         setCardData(data  => ({...data, logos}))

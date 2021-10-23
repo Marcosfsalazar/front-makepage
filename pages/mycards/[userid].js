@@ -1,20 +1,36 @@
 import Menu from "../../components/Menu/Menu";
 import createApolloClient from "../../lib/apolloClient";
-import {gql, useMutation} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 import Link from "next/link"
 import CardOneUpdate from "../../components/Cards/CardOne/cardOneUpdate";
 import {useEffect, useState} from "react";
 import {deleteCard} from "../../lib/mutations/cardMutation";
 import {toast} from "react-toastify";
 import Button from "../../components/Button";
+import {GET_CARDS} from "../../lib/queries/cardQueries";
 
-const MyCards = ({ userid, data }) => {
+const MyCards = ({ userid }) => {
+    const { data, loading } = useQuery(GET_CARDS, {
+        variables:{
+            userId: parseInt(userid),
+        }
+    })
     const [openCardUpdate, setOpenCardUpdate] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [cardList, setCardList] = useState([]);
+    const [cards, setCards] = useState();
     const [cardId, setCardId] = useState();
-    const { cards } = data;
-    const [deleteOneCard] = useMutation(deleteCard);
+    const [deleteOneCard] = useMutation(deleteCard,{
+        refetchQueries:[
+            {
+                query: GET_CARDS,
+                variables:{
+                    userId: parseInt(userid),
+                }
+            }
+        ]
+    });
+    console.log(data)
     const handleData = (data) => {
         const date= new Date(Date.parse(data));
         return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`)
@@ -62,8 +78,12 @@ const MyCards = ({ userid, data }) => {
         setCardId(id);
     }
     useEffect(() => {
-        setCardList(cards);
-    },[data])
+        setCardList(data?.cards);
+        setCards(data?.cards);
+    },[data, data?.cards])
+    if(loading || !data){
+        return <>loading...</>
+    }
     return (
         <div className="flex">
            <Menu/>
@@ -249,25 +269,11 @@ const MyCards = ({ userid, data }) => {
     )
 }
 
-MyCards.getInitialProps = async (ctx) => {
-    const client = createApolloClient();
+export async function getServerSideProps (ctx) {
     const {userid} = ctx.query;
-    console.log(userid)
-    const { data } = await client.query({
-        query: gql`
-            query cards($userId: Int){
-                cards(where:{userId: $userId}){
-                    id
-                    created_at
-                    data
-                }
-            }
-        `,
-        variables:{
-            userId: parseInt(userid),
-        }
-    })
-    return { userid, data }
+    return {
+        props: { userid }
+    }
 }
 
 MyCards.auth = true;

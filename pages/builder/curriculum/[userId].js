@@ -12,6 +12,7 @@ import {useState} from "react";
 const CurriculumBuilder = ({ data }) => {
     const { userId } = data;
     console.log(data)
+    const [link, setLink] = useState('')
     const [saveCurriculum] = useMutation(createCurriculum)
     const [saveDado] = useMutation(createDado)
     const [img, setImg] = useState();
@@ -59,6 +60,7 @@ const CurriculumBuilder = ({ data }) => {
                                 closeOnClick: true,
                                 type: "success",
                             })
+                            setLink(response?.data?.createCurriculum?.curriculum?.id);
                         }
                     })
                     .catch(e => {
@@ -94,6 +96,12 @@ const CurriculumBuilder = ({ data }) => {
                 <section className="w-full h-20 bg-gray-200 flex justify-center items-center">
                     <h1 className="font-bold text-xl">New Curriculum</h1>
                 </section>
+                { link &&
+                <span className="self-center flex">
+                        <div className="text-red-500 font-bold mr-2">CurriculumLink:</div>
+                        <Link href={`/curriculum/${link}`}>Clique aqui</Link>
+                    </span>
+                }
                 <section className="flex justify-center mt-12">
                     <Formik
                         initialValues={{
