@@ -3,11 +3,12 @@ import {gql, useMutation, useQuery} from "@apollo/client";
 import {updateDado} from "../../lib/mutations/dadoMutation";
 import {dadoQuery} from "../../lib/queries/dadosQueries";
 import {useEffect} from "react";
+import {Grid, GridItem, Box, Image, List, ListItem} from "@chakra-ui/react"
+import Outdoor from "../../components/Outdoor";
 
 const Curriculum = (data) => {
     const  curriculum  = data?.curriculum?.data
     const [updtDado] = useMutation(updateDado);
-    console.log('data', data)
     if(!curriculum){
         return "Loading...";
     }
@@ -35,133 +36,346 @@ const Curriculum = (data) => {
                 .catch(e => console.log(JSON.stringify(e)))
         }
     },[dado])
-    const theme = curriculum.theme === 'black' ? {
-        mainColor: 'black',
-        secondaryColor:'gray-600',
-        textColor: 'white',
-    } :{
-        mainColor: 'gray-200',
-        secondaryColor:'white',
-        textColor: 'black',
-    }
+    const themeDefine = () => {switch(curriculum.theme){
+        case 'tomato':
+            return {
+                secondaryColor: "white",
+                textColor: "black",
+                profileColor: "tomato",
+                auxiliarColor: "papayawhip",
+                borderColor: "black",
+                skillsBg: "black",
+                nameColor: "gray.800",
+                outdoorColor: "black"
+            }
+        case 'white':
+            return{
+                secondaryColor: "white",
+                textColor: "#050505",
+                profileColor: "#29339B",
+                auxiliarColor: "white",
+                borderColor: "#050505",
+                skillsBg: "white",
+                skillsBgHover: "#050505",
+                nameColor: "#29339B",
+                outdoorColor: "#29339B"
+            }
+        case 'black':
+            return{
+                secondaryColor: "white",
+                textColor: "black",
+                profileColor: "black",
+                auxiliarColor: "white",
+                borderColor: "#555568",
+                skillsBg: "white",
+                skillsBgHover: "#004E98",
+                nameColor: "#004E98",
+                outdoorColor: "#004E98",
+                outdoorSkillColor: "white",
+            }
+        case 'darkGray':
+            return{
+                secondaryColor: "#211e20",
+                textColor: "#e9efec",
+                profileColor: "#555568",
+                auxiliarColor: "#211e20",
+                borderColor: "#555568",
+                skillsBg: "#211e20",
+                skillsBgHover: "#e9efec",
+                nameColor: "#555568",
+                outdoorColor: "#555568"
+            }
+        case 'smooth':
+            return{
+                secondaryColor: "#f1f2da",
+                textColor: "#00303b",
+                profileColor: "#ff7777",
+                auxiliarColor: "#ffce96",
+                borderColor: "#555568",
+                skillsBg: "#ff7777",
+                skillsBgHover: "#ffce96",
+                nameColor: "#00303b",
+                outdoorColor: "#00303b"
+            }
+        case 'darkSmooth':
+            return{
+                secondaryColor: "#332c50",
+                textColor: "#e2f3e4",
+                profileColor: "#e2f3e4",
+                auxiliarColor: "#46878f",
+                borderColor: "#e2f3e4",
+                skillsBg: "#46878f",
+                skillsBgHover: "#94e344",
+                nameColor: "#94e344",
+                outdoorColor: "#00303b"
+            }
+        default:
+            return {
+                secondaryColor: "white",
+                textColor: "black",
+                profileColor: "tomato",
+                auxiliarColor: "papayawhip",
+                borderColor: "black",
+                skillsBg: "black",
+                nameColor: "gray.800",
+                outdoorColor: "black"
+            }
+
+    }}
+    const theme = themeDefine();
     return (
-        <div className={`w-screen h-screen flex items-center bg-${theme.secondaryColor} text-${theme.textColor}`}>
-            <section className={`bg-${theme.mainColor} w-2/5 h-screen flex-col`}>
-                <div className="
-                    flex-col
-                    text-center
-                    justify-center
-                    justify-items-center
-                    h-full
-                    w-full
-                    px-4
-                    py-8
-                    ">
-                    <img className="
-                        rounded-full
+        <Grid
+            templateColumns={"repeat(10,1fr)"}
+            templateRows="repeat(6, 1fr)"
+            color={`${theme.textColor}`}
+            w={"100vw"}
+            h={"100vh"}
+        >
+            <GridItem
+                colSpan={3}
+                rowSpan={2}
+                bg={theme.profileColor}
+                display="flex"
+                alignItems="center"
+                borderRight={`1px solid ${theme.borderColor}`}
+            >
+                <Image
+                    borderRadius="full"
+                    className="
                         m-auto
-                        mb-2
-                        w-32
-                        h-32
+                        w-40
+                        h-40
                         2xl:w-60
                         2xl:h-60
-                        bg-gray-100
                         self-center"
-                         src={curriculum.image.imgLink}
-                         alt="profile pic"
-                            />
-                        <span className="font-bold 2xl:text-2xl block">{curriculum.name}</span>
-                        <span className="text-xs 2xl:text-sm font-mono">{curriculum.degree}</span>
+                    objectFit="cover"
+                    boxShadow="0 4px 8px 0 rgba(0,0,0,0.2)"
+                    src={curriculum.image.imgLink}
+                />
+            </GridItem>
+            <GridItem
+                colSpan={7}
+                rowSpan={2}
+                bg={theme.secondaryColor}
+                padding="2rem"
+                borderLeft={`1px solid ${theme.borderColor}`}
+                borderBottom={`1px solid ${theme.borderColor}`}
+            >
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    w="fit-content"
+                >
+                    <Box
+                        fontWeight="600"
+                        fontFamily="mono"
+                        color={`${theme.nameColor}`}
+                        fontSize={{ md:"1rem", lg: "2rem", "2xl":"4rem" }}
+                        letterSpacing="2px"
+                    >
+                        {curriculum.name}
+                    </Box>
+                    <Box
+                        alignSelf="end"
+                        className="text-xs 2xl:text-sm font-mono"
+                    >
+                        {curriculum.degree}
+                    </Box>
+                </Box>
+                <Box
+                    h="60%"
+                    display="flex"
+                >
                     { curriculum?.contact?.length > 0 &&
-                        <ul className="pt-4 2xl:text-xl">
-                            <div className="font-bold font-mono 2xl:text-2xl">Contato</div>
-                            {
-                                curriculum.contact.map(contact => (
-                                    <>
-                                        <li>
+                    <List
+                        fontWeight="600"
+                        fontFamily="mono"
+                        color={`${theme.textColor}`}
+                        fontSize={{ md:"0.5rem", lg: "0.75rem", "2xl":"1rem" }}
+                        className="pt-4"
+                        alignSelf="end"
+                        display="flex"
+                    >
+                        {
+                            curriculum.contact.map(contact => (
+                                <ListItem mr="2em">
+                                    <ListItem>
                                             <span className="font-bold mr-2">
                                                 E-mail:
                                             </span>
-                                            <span>
+                                        <span>
                                                 {contact.mail}
                                             </span>
-                                        </li>
-                                        <li>
+                                    </ListItem>
+                                    <ListItem>
                                             <span className="font-bold mr-2">
                                                 Tel.:
                                             </span>
-                                            <span>
+                                        <span>
                                                  {contact.phone}
                                             </span>
-                                        </li>
-                                    </>
-                                ))
-                            }
-                        </ul>
+                                    </ListItem>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
                     }
-                    { curriculum?.skills?.length > 0 &&
-                        <ul className="pt-4 2xl:text-xl">
-                            <div className="font-bold font-mono 2xl:text-2xl">Skills</div>
+                </Box>
+            </GridItem>
+            <GridItem colSpan={3} rowSpan={4} bg={theme.profileColor} borderRight={`1px solid ${theme.borderColor}`}>
+                <Box
+                    w="100%"
+                    h="100%"
+                    padding="8px"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                >
+                    <Outdoor
+                        text="SKILLS"
+                        textColor={`${theme.outdoorSkillColor || theme.outdoorColor}`}
+                        bgColor="none"
+                        letterSpacing="2px"
+                    />
+                        { curriculum?.skills?.length > 0 &&
+                        <List
+                            display="flex"
+                            flexDirection="column"
+                            pt="8px"
+                            w="100%"
+                        >
                             {
-                                curriculum.skills.map(skill => (
-                                    <li>
-                                        <span className="font-mono">
+                            curriculum.skills.map(skill => (
+                                <ListItem
+                                    marginBottom="2px"
+                                    w="100%"
+                                    display="flex"
+                                    flexDirection="column"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                    p="4px"
+                                    fontWeight="600"
+                                    borderRadius="4px"
+                                    bg={theme.secondaryColor}
+                                    boxShadow="0 4px 8px 0 rgba(0,0,0,0.2);"
+                                    _hover={{
+                                        bg:`${theme.skillsBgHover || theme.secondaryColor}`,
+                                        color:`${theme.skillsBg}`,
+                                        cursor:"pointer"
+                                    }}
+                                >
+                                        <Box
+                                            fontSize={{ md:"12px", lg: "16px", "2xl":"24px" }}
+                                        >
                                             { skill.skill }
-                                        </span>
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                                        </Box>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
                     }
-                </div>
-            </section>
-            <section
-                className="w-3/5 h-screen p-20 2xl:text-xl"
-            >
-                { curriculum.personalDesc &&
-                    <div>
-                        <span className="font-bold text-xl 2xl:text-2xl">Sobre</span>
-                        <p className="py-1 px-4 2x">
-                            { curriculum.personalDesc }
-                        </p>
-                    </div>
-                }
-                { curriculum?.study?.length > 0 &&
-                    <div className="mt-2">
-                        <span className="font-bold text-xl 2xl:text-2xl">Formação Acadêmica</span>
-                        <ul className="py-1 px-4">
-                            {
-                                curriculum.study.map(study => (
-                                    <li className="flex-col">
-                                        <span className="font-bold block">{study.college}</span>
-                                        <span className="py-1 px-4">
+                </Box>
+            </GridItem>
+            <GridItem colSpan={7} rowSpan={4} bg={theme.auxiliarColor} borderTop={`1px solid ${theme.borderColor}`} borderLeft={`1px solid ${theme.borderColor}`}>
+                <Box
+                    w="100%"
+                    h="100%"
+                    display="flex"
+                    justifyContent="space-around"
+                    fontSize={{ md:"12px", lg: "16px", "2xl":"24px" }}
+                    fontWeight="500"
+                    fontFamily="mono"
+                >
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        p="8px"
+                    >
+                        <Outdoor
+                            text="SOBRE"
+                            h="42px"
+                            w="150px"
+                            bgColor="none"
+                            textColor={`${theme.outdoorColor}`}
+                        />
+                        { curriculum.personalDesc &&
+                        <div>
+                            <p className="py-1 px-4 2x">
+                                { curriculum.personalDesc }
+                            </p>
+                        </div>
+                        }
+                    </Box>
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        p="8px"
+                    >
+                        <Outdoor
+                            text="FORMAÇÃO"
+                            h="42px"
+                            w="150px"
+                            bgColor="none"
+                            textColor={`${theme.outdoorColor}`}
+                        />
+                        { curriculum?.study?.length > 0 &&
+                        <Box>
+                            <List>
+                                {
+                                    curriculum.study.map(study => (
+                                        <ListItem p="2px" className="flex-col">
+                                            <span className="font-bold block">{study.college}</span>
+                                            <span>
                                             { study.desc }
                                         </span>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                }
-                {curriculum?.experience?.length > 0 &&
-                    <div className="mt-2">
-                        <span className="font-bold text-xl 2xl:text-2xl">Experiência</span>
-                        <ul className="py-1 px-4">
-                            {
-                                curriculum.experience.map(exp => (
-                                    <li className="flex-col">
-                                        <span className="font-bold block">{exp.local}</span>
-                                        <span className="py-1 px-4">
+                                        </ListItem>
+                                    ))
+                                }
+                            </List>
+                        </Box>
+                        }
+                    </Box>
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        p="8px"
+                    >
+                        <Outdoor
+                            text="EXPERIÊNCIA"
+                            h="42px"
+                            w="150px"
+                            bgColor="none"
+                            textColor={`${theme.outdoorColor}`}
+                        />
+                        { curriculum?.study?.length > 0 &&
+                        <Box>
+                            <ul>
+                                {curriculum?.experience?.length > 0 &&
+                                <Box>
+                                    <List>
+                                        {
+                                            curriculum.experience.map(exp => (
+                                                <ListItem p="2px" className="flex-col">
+                                                    <span className="font-bold block">{exp.local}</span>
+                                                    <span className="py-1 px-4">
                                             {exp.desc}
                                         </span>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                }
-            </section>
-        </div>
+                                                </ListItem>
+                                            ))
+                                        }
+                                    </List>
+                                </Box>
+                                }
+                            </ul>
+                        </Box>
+                        }
+                    </Box>
+                </Box>
+            </GridItem>
+        </Grid>
     )
 }
 

@@ -4,6 +4,7 @@ import Icons from "../../components/Icons/Icons";
 import {dadoQuery} from "../../lib/queries/dadosQueries";
 import {useEffect} from "react";
 import {updateDado} from "../../lib/mutations/dadoMutation";
+import { Box } from '@chakra-ui/react'
 
 const Card = ({ data }) => {
     const { card } = data;
@@ -36,17 +37,17 @@ const Card = ({ data }) => {
         }
     },[dado])
     return (
-        <div className="w-screen h-screen flex items-center justify-center bg-yellow-300">
-            <div
+        <Box className="w-screen h-screen flex items-center justify-center bg-yellow-300">
+            <Box
+                bg="black"
+                borderRadius="lg"
                 className="
-                    bg-black
-                    w-2/4
-                    h-2/4
-                    rounded
-                    flex
-                    shadow-lg"
+                w-3/6
+                h-2/4
+                flex
+                shadow-md"
             >
-                <div className="flex flex-col items-center self-center mb-6 pt-0 2xl:self-center 2xl:mb-20 w-1/3">
+                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="w-1/3 h-full">
                     <img className="
                             rounded-full
                             mb-1
@@ -68,33 +69,36 @@ const Card = ({ data }) => {
                     >
                         { card?.data?.cardData?.name }
                     </div>
-                    <div
+                    <Box
+                        mb="8"
                         className="text-white text-xs 2xl:text-lg bg-black w-full text-center"
                     >
                         { card?.data?.cardData?.title }
-                    </div>
+                    </Box>
                     <Icons
                         className="text-white mt-2 2xl:mt-4 flex"
                         logosClass="mx-2"
                         logos={card?.data?.cardData?.logos}
                     />
-                </div>
-                <div className="bg-red-500 w-2/3 h-full text-white p-8 2xl:flex 2xl:pt-20">
-                    <div className="mt-12">
-                        <div
-                            className="font-semibold bg-red-500 2xl:text-2xl"
+                </Box>
+                <Box bg="tomato" display="flex" flexDirection="column" justifyContent="center" className="w-2/3 h-full text-white p-8">
+                    <Box>
+                        <Box
+                            bg="tomato"
+                            className="font-semibold 2xl:text-2xl"
                         >
                             { card?.data?.cardData?.about }
-                        </div>
-                        <div
-                            className="text-sm pl-2 w-full h-full bg-red-500 resize-none 2xl:text-xl"
+                        </Box>
+                        <Box
+                            bg="tomato"
+                            className="text-sm pl-2 w-full h-full resize-none 2xl:text-xl"
                         >
                             { card?.data?.cardData?.desc }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
     )
 }
 

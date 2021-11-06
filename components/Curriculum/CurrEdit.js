@@ -66,9 +66,9 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
             })
     }
     return(
-        <div className="flex w-screen h-screen">
-            <main className="flex flex-col w-screen">
-                <section className="flex justify-center">
+        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-screen">
+            <main className="flex flex-col w-screen h-screen">
+                <section className="flex justify-center text-md 2xl:text-xl">
                     <Formik
                         initialValues={{
                             name: data?.curriculum.data?.name,
@@ -90,11 +90,11 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                               handleSubmit,
                           }) => (
                             <form
-                                className="flex-col items-center justify-center"
+                                className="flex-col w-100 items-center justify-center"
                                 onSubmit={handleSubmit}
                             >
-                                <div className="overflow-hidden w-28">
-                                    <label htmlFor="image">Trocar Foto (limit 700kb)</label>
+                                <div className="overflow-hidden 2xl:text-md w-30">
+                                    <label htmlFor="image">Trocar Foto (limite 700kb)</label>
                                         <input
                                             name="image"
                                             type="file"
@@ -103,7 +103,7 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                                         />
                                 </div>
                                 <div>
-                                    <label htmlFor="name">Nome</label>
+                                    <label htmlFor="name" className="font-bold">Nome</label>
                                     <Field
                                         type="text"
                                         name="name"
@@ -111,7 +111,7 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="degree">Formação</label>
+                                    <label htmlFor="degree" className="font-bold">Formação</label>
                                     <Field
                                         type="text"
                                         name="degree"
@@ -119,11 +119,12 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="degree">Descrição pessoal</label>
+                                    <label htmlFor="degree" className="font-bold">Descrição pessoal</label>
                                     <Field
                                         type="text"
                                         name="personalDesc"
                                         className="border m-2 block"
+                                        as="textarea"
                                     />
                                 </div>
                                 <div>
@@ -352,6 +353,10 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                                         >
                                             <option value="white">White</option>
                                             <option value="black">Black</option>
+                                            <option value="tomato">Tomato</option>
+                                            <option value="darkGray">Dark Gray</option>
+                                            <option value="smooth">Smooth</option>
+                                            <option value="darkSmooth">Dark Smooth</option>
                                         </Field>
                                     </div>
                                     <div className="justify-self-center text-center m-2">

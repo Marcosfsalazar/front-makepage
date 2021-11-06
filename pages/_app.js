@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/client'
 import { Provider } from 'next-auth/client'
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/apollo';
+import { ChakraProvider } from "@chakra-ui/react"
 
 function MyApp({ Component, pageProps }) {
     const apolloClient = useApollo(pageProps.initialApolloState)
@@ -12,10 +13,12 @@ function MyApp({ Component, pageProps }) {
     return (
         <ApolloProvider client={apolloClient}>
             <Provider session={pageProps.session}>
-                {Component.auth
-                    ? <Auth><Component {...pageProps} /></Auth>
-                    : <Component {...pageProps} />
-                }
+                <ChakraProvider>
+                    {Component.auth
+                        ? <Auth><Component {...pageProps} /></Auth>
+                        : <Component {...pageProps} />
+                    }
+                </ChakraProvider>
             </Provider>
         </ApolloProvider>
     )

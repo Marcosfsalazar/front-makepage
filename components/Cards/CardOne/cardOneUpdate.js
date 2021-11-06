@@ -6,6 +6,7 @@ import {useMutation, useQuery} from "@apollo/client";
 import {cardQuery} from "../../../lib/queries/cardQueries";
 import {updateCard} from "../../../lib/mutations/cardMutation";
 import {toast} from "react-toastify";
+import { Box, Input, Textarea } from "@chakra-ui/react"
 import 'react-toastify/dist/ReactToastify.css';
 
 const CardOneUpdate = ({ cardId, setOpenCard }) => {
@@ -81,7 +82,8 @@ const CardOneUpdate = ({ cardId, setOpenCard }) => {
     }
     return(
         <div className="flex flex-col items-center justify-center w-full h-full">
-            <div
+            <Box
+                borderRadius="lg"
                 className="
                 bg-black
                 w-8/12
@@ -196,21 +198,23 @@ const CardOneUpdate = ({ cardId, setOpenCard }) => {
                         logos={cardData?.logos}
                     />
                 </div>
-                <div className="bg-red-500 w-2/3 h-full text-white p-8">
+                <Box bg="tomato" color="white" className="w-2/3 h-full p-8">
                     <div className="mt-12">
-                        <input
+                        <Input
+                            bg="tomato"
                             className="font-semibold bg-red-500"
                             value={cardData?.about}
                             onChange={e => setCardData(data => ({...data, about: e.target.value}))}
                         />
-                        <textarea
+                        <Textarea
+                            bg="tomato"
                             className="text-sm pl-2 w-full h-40 bg-red-500 resize-none"
                             value={cardData?.desc}
                             onChange={e => setCardData(data => ({...data, desc: e.target.value}))}
                         />
                     </div>
-                </div>
-            </div>
+                </Box>
+            </Box>
             <div>
                 <Button
                     className="bg-red-500 m-1"

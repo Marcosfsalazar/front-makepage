@@ -2,6 +2,7 @@ import Icons from "../../Icons/Icons";
 import {useEffect, useState} from "react";
 import Button from "../../Button";
 import { SOCIALS } from "../../../utils/socials"
+import { Box, Input, Textarea } from "@chakra-ui/react"
 import {url_picture} from "../../../lib/constants";
 
 const CardOneEdit = ({ setData }) => {
@@ -27,15 +28,16 @@ const CardOneEdit = ({ setData }) => {
         setData({
             name,title,about,desc,logos,link,actualSelect,img
         })
-    },[name,title,about,desc,logos,link,actualSelect])
+    },[name,title,about,desc,logos,link,actualSelect, img])
     const handleSaveLogos = (name, link) => {
         setLogos(logos => [{name:name, link:link},...logos]);
         return setFieldsetVisible(false);
     }
     return(
-        <div
+        <Box
+            bg="black"
+            borderRadius="lg"
             className="
-                bg-black
                 w-8/12
                 h-80
                 flex
@@ -166,21 +168,23 @@ const CardOneEdit = ({ setData }) => {
                     logos={logos}
                 />
             </div>
-            <div className="bg-red-500 w-2/3 h-full text-white p-8">
+            <Box bg="tomato" color="white" className="w-2/3 h-full p-8">
                 <div className="mt-12">
-                    <input
-                        className="font-semibold bg-red-500"
+                    <Input
+                        bg="tomato"
+                        className="font-semibold"
                         value={about}
                         onChange={e => setAbout(e.target.value)}
                     />
-                    <textarea
-                        className="text-sm pl-2 w-full h-40 bg-red-500 resize-none"
+                    <Textarea
+                        bg="tomato"
+                        className="text-sm pl-2 w-full h-40 resize-none"
                         value={desc}
                         onChange={e => setDesc(e.target.value)}
                     />
                 </div>
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 

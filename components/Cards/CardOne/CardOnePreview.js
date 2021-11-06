@@ -1,17 +1,19 @@
 import Icons from "../../Icons/Icons";
+import { Box } from "@chakra-ui/react"
 
 const CardOneEdit = ({ data }) => {
-
+    console.log(data)
     return(
-        <div
+        <Box
+            bg="black"
+            borderRadius="lg"
             className="
-                bg-black
                 w-3/6
-                h-80
+                h-2/4
                 flex
                 shadow-md"
         >
-            <div className="flex flex-col items-center w-1/3">
+            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="w-1/3 h-full">
                 {data?.img?.imgLink ?
                     <img className="
                         rounded-full
@@ -43,32 +45,35 @@ const CardOneEdit = ({ data }) => {
                 >
                     { data?.name }
                 </div>
-                <div
+                <Box
+                    mb="8"
                     className="text-white text-xs bg-black w-full text-center"
                 >
                     { data?.title }
-                </div>
+                </Box>
                 <Icons
                     className="text-white mt-2 flex"
                     logosClass="mx-2"
                     logos={data?.logos}
                 />
-            </div>
-            <div className="bg-red-500 w-2/3 h-full text-white p-8">
-                <div className="mt-12">
-                    <div
-                        className="font-semibold bg-red-500"
+            </Box>
+            <Box bg="tomato" display="flex" flexDirection="column" justifyContent="center" className="w-2/3 h-full text-white p-8">
+                <Box>
+                    <Box
+                        bg="tomato"
+                        className="font-semibold 2xl:text-2xl"
                     >
                         { data?.about }
-                    </div>
-                    <div
-                        className="text-sm pl-2 w-full h-40 bg-red-500 resize-none"
+                    </Box>
+                    <Box
+                        bg="tomato"
+                        className="text-sm pl-2 w-full h-full resize-none 2xl:text-xl"
                     >
-                        { data.desc }
-                    </div>
-                </div>
-            </div>
-        </div>
+                        { data?.desc }
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
     )
 }
 

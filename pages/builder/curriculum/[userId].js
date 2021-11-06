@@ -158,6 +158,7 @@ const CurriculumBuilder = ({ data }) => {
                                         type="text"
                                         name="personalDesc"
                                         className="border m-2 block"
+                                        as="textarea"
                                     />
                                 </div>
                                 <div>
@@ -379,6 +380,10 @@ const CurriculumBuilder = ({ data }) => {
                                         >
                                             <option value="white">White</option>
                                             <option value="black">Black</option>
+                                            <option value="tomato">Tomato</option>
+                                            <option value="darkGray">Dark Gray</option>
+                                            <option value="smooth">Smooth</option>
+                                            <option value="darkSmooth">Dark Smooth</option>
                                         </Field>
                                     </div>
                                     <div className="justify-self-center text-center m-2">
