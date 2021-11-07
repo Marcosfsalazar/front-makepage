@@ -148,7 +148,7 @@ const Curriculum = (data) => {
                         self-center"
                     objectFit="cover"
                     boxShadow="0 4px 8px 0 rgba(0,0,0,0.2)"
-                    src={curriculum.image.imgLink}
+                    src={curriculum?.image?.imgLink}
                 />
             </GridItem>
             <GridItem
@@ -171,13 +171,13 @@ const Curriculum = (data) => {
                         fontSize={{ md:"1rem", lg: "2rem", "2xl":"4rem" }}
                         letterSpacing="2px"
                     >
-                        {curriculum.name}
+                        {curriculum.name || ''}
                     </Box>
                     <Box
                         alignSelf="end"
                         className="text-xs 2xl:text-sm font-mono"
                     >
-                        {curriculum.degree}
+                        {curriculum.degree || ''}
                     </Box>
                 </Box>
                 <Box
@@ -194,15 +194,15 @@ const Curriculum = (data) => {
                         alignSelf="end"
                         display="flex"
                     >
-                        {
-                            curriculum.contact.map((contact, index) => (
+                        { curriculum?.contact?.length > 0 &&
+                            curriculum?.contact?.map((contact, index) => (
                                 <ListItem mr="2em" key={index}>
-                                    <ListItem key={contact.mail}>
+                                    <ListItem key={contact.mail || ''}>
                                             <span className="font-bold mr-2">
                                                 E-mail:
                                             </span>
                                         <span>
-                                                {contact.mail}
+                                                {contact.mail || ''}
                                             </span>
                                     </ListItem>
                                     <ListItem key={contact.phone}>
@@ -210,7 +210,7 @@ const Curriculum = (data) => {
                                                 Tel.:
                                             </span>
                                         <span>
-                                                 {contact.phone}
+                                                 {contact.phone || ''}
                                             </span>
                                     </ListItem>
                                 </ListItem>
@@ -265,7 +265,7 @@ const Curriculum = (data) => {
                                         <Box
                                             fontSize={{ md:"12px", lg: "16px", "2xl":"24px" }}
                                         >
-                                            { skill.skill }
+                                            { skill.skill || '' }
                                         </Box>
                                 </ListItem>
                             ))
