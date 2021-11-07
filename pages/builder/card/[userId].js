@@ -9,12 +9,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import CardOnePreview from "../../../components/Cards/CardOne/CardOnePreview";
 import Link from 'next/link';
 import {createDado} from "../../../lib/mutations/dadoMutation";
+import {Box} from "@chakra-ui/react";
+import {Field} from "formik";
 
 const CardBuilder = ({ data }) => {
     const {username, userId} = data;
     const [cardData, setCardData] = useState({});
     const [openPreview, setOpenPreview] = useState(false);
     const [link, setLink] = useState('')
+    const [theme, setTheme] = useState('white')
     const [saveCard] = useMutation(createCard)
     const [saveDado] = useMutation(createDado)
     const handleSaveCard = (cardData) => {
@@ -63,6 +66,40 @@ const CardBuilder = ({ data }) => {
                 })
     }
 
+    const themeDefine = () => {switch(theme){
+        case 'tomato':
+            return {
+                auxiliarColor: "papayawhip",
+            }
+        case 'white':
+            return{
+                bgColor: "#f2f2f2"
+            }
+        case 'black':
+            return{
+                bgColor:"#004E98",
+            }
+        case 'darkGray':
+            return{
+                bgColor: "#e9efec",
+            }
+        case 'smooth':
+            return{
+                auxiliarColor: "#ffce96",
+            }
+        case 'darkSmooth':
+            return{
+                auxiliarColor: "#46878f",
+            }
+        default:
+            return {
+                auxiliarColor: "papayawhip",
+            }
+
+    }}
+
+    const bg = themeDefine();
+
     return(
         <div className="flex">
             <Menu/>
@@ -92,10 +129,34 @@ const CardBuilder = ({ data }) => {
                         <Link href={`/card/${link}`}>Clique aqui</Link>
                     </span>
                 }
-                <section className="flex justify-center mt-12">
-                    <CardOneEdit setData={setCardData}/>
+                <Box
+                    alignSelf="center"
+                    mt="1rem"
+                    textAlign="center"
+                >
+                    Tema
+                    <select
+                        onChange={(e)=>setTheme(e.target.value)}
+                        className="border m-2 block"
+                    >
+                        <option value="white">White</option>
+                        <option value="black">Black</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="darkGray">Dark Gray</option>
+                        <option value="smooth">Smooth</option>
+                        <option value="darkSmooth">Dark Smooth</option>
+                    </select>
+                </Box>
+                <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    flexDirection="column"
+                    className="mt-6 h-full"
+                >
+                    <CardOneEdit setData={setCardData} theme={theme}/>
                     {openPreview &&
-                        <div
+                        <Box
                             className="
                         justify-center
                         items-center
@@ -108,9 +169,9 @@ const CardBuilder = ({ data }) => {
                         outline-none
                         focus:outline-none"
                         >
-                            <div
+                            <Box
+                                bg={bg.bgColor || bg.auxiliarColor}
                                 className="
-                                bg-white
                                 h-screen
                                 w-screen
                                 flex
@@ -118,7 +179,7 @@ const CardBuilder = ({ data }) => {
                                 items-center
                                 justify-center"
                             >
-                                <CardOnePreview data={cardData}/>
+                                <CardOnePreview data={cardData} theme={theme}/>
                                 <div
                                     className="self-center mt-8"
                                 >
@@ -135,12 +196,12 @@ const CardBuilder = ({ data }) => {
                                         Salvar
                                     </Button>
                                 </div>
-                            </div>
-                        </div>
+                            </Box>
+                        </Box>
                     }
-                </section>
+                </Box>
                 <div
-                    className="self-center mt-8"
+                    className="self-center mt-2 mb-6"
                 >
                     <Button
                         className="bg-yellow-500 mx-2"

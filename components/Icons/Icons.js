@@ -11,6 +11,7 @@ import {
     IoLogoTwitch,
     IoLogoTiktok,
 } from "react-icons/io5";
+import {Box} from "@chakra-ui/react";
 
 const Map = {
     "github": IoLogoGithub,
@@ -26,16 +27,16 @@ const Map = {
     "tiktok": IoLogoTiktok,
 }
 
-const Icons = ({className, logosClass, logos}) => {
+const Icons = ({className, logosClass, logos, color}) => {
     return (
-        <div className={className}>
+        <Box className={className}>
             { logos &&
                 logos.map((logo, index) => {
                     const ComponentName = Map[logo.name];
-                    return <a key={`${logo.link}${index}`}  href={logo.link} className={logosClass}><ComponentName{...logo} color="white" size="28"/></a>
+                    return <a key={`${logo.link}${index}`}  href={logo.link} className={logosClass}><ComponentName{...logo} color={color} size="28"/></a>
                 })
             }
-        </div>
+        </Box>
     )
 }
 

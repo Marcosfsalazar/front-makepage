@@ -13,7 +13,7 @@ const Card = ({ data }) => {
     if(!card){
         return "Loading...";
     }
-    console.log(card)
+   const colors = card?.data?.cardData?.colors;
     const { data: dado, loading } = useQuery(dadoQuery,{
         variables:{
             id: parseInt(card.dadoId)
@@ -37,9 +37,13 @@ const Card = ({ data }) => {
         }
     },[dado])
     return (
-        <Box className="w-screen h-screen flex items-center justify-center bg-yellow-300">
+        <Box
+            bg={colors.bgColor || colors.auxiliarColor}
+            className="w-screen h-screen flex items-center justify-center"
+        >
             <Box
-                bg="black"
+                color={colors.auxiliarColor}
+                bg={`${colors.profileColor}`}
                 borderRadius="lg"
                 className="
                 w-3/6
@@ -47,7 +51,13 @@ const Card = ({ data }) => {
                 flex
                 shadow-md"
             >
-                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="w-1/3 h-full">
+                <Box
+                    color={colors.alternativeText || colors.auxiliarColor}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    className="w-1/3 h-full">
                     <img className="
                             rounded-full
                             mb-1
@@ -58,9 +68,9 @@ const Card = ({ data }) => {
                             bg-gray-100"
                          src={card?.data?.cardData?.img?.imgLink}
                     />
-                    <div
+                    <Box
+                        bg={colors.profileColor}
                         className="
-                        text-white
                         font-bold
                         bg-black
                         w-full
@@ -68,29 +78,38 @@ const Card = ({ data }) => {
                         text-center"
                     >
                         { card?.data?.cardData?.name }
-                    </div>
+                    </Box>
                     <Box
                         mb="8"
-                        className="text-white text-xs 2xl:text-lg bg-black w-full text-center"
+                        bg={colors.profileColor}
+                        className="text-xs 2xl:text-lg w-full text-center"
                     >
                         { card?.data?.cardData?.title }
                     </Box>
                     <Icons
-                        className="text-white mt-2 2xl:mt-4 flex"
+                        className="mt-2 2xl:mt-4 flex"
                         logosClass="mx-2"
                         logos={card?.data?.cardData?.logos}
+                        color={colors.secondaryColor}
                     />
                 </Box>
-                <Box bg="tomato" display="flex" flexDirection="column" justifyContent="center" className="w-2/3 h-full text-white p-8">
-                    <Box>
+                <Box bg={colors.secondaryColor} display="flex" flexDirection="column" justifyContent="center" className="w-2/3 h-full p-8">
+                    <Box
+                        color={colors.alternativeText || colors.textColor}
+                    >
                         <Box
-                            bg="tomato"
+                            bg={colors.bgColor || colors.auxiliarColor}
                             className="font-semibold 2xl:text-2xl"
+                            borderRadius="4px 4px 0 0"
+                            p="4px"
                         >
                             { card?.data?.cardData?.about }
                         </Box>
                         <Box
-                            bg="tomato"
+                            bg={colors.borderColor}
+                            color={colors.auxiliarColor}
+                            borderRadius="0 0 4px 4px"
+                            p="8px"
                             className="text-sm pl-2 w-full h-full resize-none 2xl:text-xl"
                         >
                             { card?.data?.cardData?.desc }
