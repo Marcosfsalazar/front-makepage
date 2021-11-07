@@ -20,5 +20,8 @@ module.exports = {
     "rules": {
         "no-unused-vars": "warn",
         "no-console": "warn",
+        "react/prop-types": 0,
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
     }
 };
