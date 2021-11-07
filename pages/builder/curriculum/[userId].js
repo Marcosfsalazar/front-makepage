@@ -8,10 +8,12 @@ import {useMutation} from "@apollo/client";
 import {createCurriculum} from "../../../lib/mutations/curriculumMutation";
 import {createDado} from "../../../lib/mutations/dadoMutation";
 import {useState} from "react";
+import LinkModal from "../../../components/LinkModal";
 
 const CurriculumBuilder = ({ data }) => {
     const { userId } = data;
     const [link, setLink] = useState('')
+    const [openModal, setOpenModal] = useState(false);
     const [saveCurriculum] = useMutation(createCurriculum)
     const [saveDado] = useMutation(createDado)
     const [img, setImg] = useState();
@@ -59,10 +61,20 @@ const CurriculumBuilder = ({ data }) => {
                                 type: "success",
                             })
                             setLink(response?.data?.createCurriculum?.curriculum?.id);
+                            setOpenModal(true);;
                         }
                     })
                     .catch(e => {
                         console.error(e)
+                        if(e?.message.includes("413")){
+                            toast.configure()
+                            toast('Limite de imagem excedido (700kb) !',{
+                                position: "bottom-center",
+                                autoClose: 3000,
+                                closeOnClick: true,
+                                type: "error",
+                            })
+                        }
                     })
             })
             .catch(e => {
@@ -94,11 +106,8 @@ const CurriculumBuilder = ({ data }) => {
                 <section className="w-full h-20 bg-gray-200 flex justify-center items-center">
                     <h1 className="font-bold text-xl">New Curriculum</h1>
                 </section>
-                { link &&
-                <span className="self-center flex">
-                        <div className="text-red-500 font-bold mr-2">CurriculumLink:</div>
-                        <Link href={`/curriculum/${link}`}>Clique aqui</Link>
-                    </span>
+                {openModal &&
+                    <LinkModal url={`${window.location.origin}/curriculum/${link}`} setModal={setOpenModal}/>
                 }
                 <section className="flex justify-center mt-12">
                     <Formik

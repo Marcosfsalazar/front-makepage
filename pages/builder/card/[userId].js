@@ -10,13 +10,14 @@ import CardOnePreview from "../../../components/Cards/CardOne/CardOnePreview";
 import Link from 'next/link';
 import {createDado} from "../../../lib/mutations/dadoMutation";
 import {Box} from "@chakra-ui/react";
-import {Field} from "formik";
+import LinkModal from "../../../components/LinkModal";
 
 const CardBuilder = ({ data }) => {
     const {username, userId} = data;
     const [cardData, setCardData] = useState({});
     const [openPreview, setOpenPreview] = useState(false);
     const [link, setLink] = useState('')
+    const [openModal, setOpenModal] = useState(false);
     const [theme, setTheme] = useState('white')
     const [saveCard] = useMutation(createCard)
     const [saveDado] = useMutation(createDado)
@@ -54,10 +55,20 @@ const CardBuilder = ({ data }) => {
                                     type: "success",
                                 })
                                 setLink(response.data.createCard.card.id);
+                                setOpenModal(true)
                             }
                         })
                         .catch(e => {
                             console.error(e)
+                            if(e?.message.includes("413")){
+                                toast.configure()
+                                toast('Limite de imagem excedido (700kb) !',{
+                                    position: "bottom-center",
+                                    autoClose: 3000,
+                                    closeOnClick: true,
+                                    type: "error",
+                                })
+                            }
                         })
                 })
                 .catch(e => {
@@ -122,12 +133,6 @@ const CardBuilder = ({ data }) => {
                 <section className="w-full h-20 bg-gray-200 flex justify-center items-center">
                     <h1 className="font-bold text-xl">New Card</h1>
                 </section>
-                { link &&
-                    <span className="self-center flex">
-                        <div className="text-red-500 font-bold mr-2">CardLink:</div>
-                        <Link href={`/card/${link}`}>Clique aqui</Link>
-                    </span>
-                }
                 <Box
                     alignSelf="center"
                     mt="1rem"
@@ -215,6 +220,9 @@ const CardBuilder = ({ data }) => {
                         Salvar
                     </Button>
                 </div>
+                {openModal &&
+                    <LinkModal url={`${window.location.origin}/card/${link}`} setModal={setOpenModal}/>
+                }
             </main>
         </div>
     )

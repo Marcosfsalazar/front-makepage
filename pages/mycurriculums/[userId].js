@@ -10,6 +10,8 @@ import CurrEdit from "../../components/Curriculum/CurrEdit";
 import Button from "../../components/Button";
 import {GET_CARDS} from "../../lib/queries/cardQueries";
 import {GET_CURRS} from "../../lib/queries/CurrQueries";
+import ShareButton from "../../components/ShareButton";
+import {useSession} from "next-auth/client";
 
 const MyCurriculums = ({ userId }) => {
     const { data, loading } = useQuery(GET_CURRS, {
@@ -21,6 +23,7 @@ const MyCurriculums = ({ userId }) => {
     const [openModal, setOpenModal] = useState(false);
     const [openCurrUpdate, setOpenCurrUpdate] = useState(false)
     const [curriculumId, setCurriculumId] = useState();
+    const [{ user }] = useSession();
     const [deleteOneCurriculum] = useMutation(deleteCurriculum, {
         refetchQueries:[
             {
@@ -157,6 +160,7 @@ const MyCurriculums = ({ userId }) => {
                                 >
                                     Excluir
                                 </button>
+                                <ShareButton name={user?.username} pagetype={"card"} link={`${window.location.origin}/card/${curriculum.id}`}/>
                             </li>
                         )
                     })

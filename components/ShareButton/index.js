@@ -1,15 +1,11 @@
 import React from 'react';
 
 const ShareButton = ({ link="", name="", pagetype="" }) => {
-    const redirect = (link, name, pagetype) => {
-        window.open(
-            `https://api.whatsapp.com/send?text=Acesse o ${pagetype} de ${name}: ${link}`,
-            '_system', 'location=yes'
-        );
-    }
     return(
         <>
                 <a
+                    href={`https://web.whatsapp.com/send?text=Acesse o ${pagetype} de ${name}: ${link}`}
+                    target="_blank"
                     className="
                         pr-2
                         mr-4
@@ -17,7 +13,6 @@ const ShareButton = ({ link="", name="", pagetype="" }) => {
                             cursor-pointer
                         }
                     "
-                   onClick={() => redirect(link, name, pagetype)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="green-500" viewBox="0 0 24 24"
                          stroke="currentColor">
