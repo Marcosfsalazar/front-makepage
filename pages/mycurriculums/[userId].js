@@ -60,7 +60,6 @@ const MyCurriculums = ({ userId }) => {
                     closeOnClick: true,
                     type: "error",
                 })
-                console.log(e)
             })
         setOpenModal(false);
     }
@@ -109,7 +108,6 @@ const MyCurriculums = ({ userId }) => {
                 <ul className="mt-8 mb-8">
                     {curricula &&
                     curricula?.map((curriculum, index) => {
-                        console.log(curriculum)
                         return(
                             <li key={index} className="
                                     px-2

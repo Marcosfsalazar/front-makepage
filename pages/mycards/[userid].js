@@ -30,7 +30,6 @@ const MyCards = ({ userid }) => {
             }
         ]
     });
-    console.log(data)
     const handleData = (data) => {
         const date= new Date(Date.parse(data));
         return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`)
@@ -68,7 +67,6 @@ const MyCards = ({ userid }) => {
                     closeOnClick: true,
                     type: "error",
                 })
-                console.log(e)
             })
         setOpenModal(false);
     }

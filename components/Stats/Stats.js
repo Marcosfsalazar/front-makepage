@@ -11,7 +11,6 @@ const Stats = ({ id, setModal }) => {
         const date= new Date(Date.parse(data));
         return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`)
     }
-    console.log(data)
     if(!data) return null;
     return(
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

@@ -17,10 +17,8 @@ const Curriculum = (data) => {
             id: parseInt(data.curriculum.dadoId)
         }
     })
-    console.log('curr', curriculum)
     useEffect(() => {
         if(dado && curriculum){
-            console.log(dado)
             updtDado({
                 variables:{
                     input:{
@@ -32,8 +30,8 @@ const Curriculum = (data) => {
                         }
                     }
                 }
-            }).then(() => console.log("Welcome!"))
-                .catch(e => console.log(JSON.stringify(e)))
+            })
+                .catch(e => console.error(JSON.stringify(e)))
         }
     },[dado])
     const themeDefine = () => {switch(curriculum.theme){
@@ -197,9 +195,9 @@ const Curriculum = (data) => {
                         display="flex"
                     >
                         {
-                            curriculum.contact.map(contact => (
-                                <ListItem mr="2em">
-                                    <ListItem>
+                            curriculum.contact.map((contact, index) => (
+                                <ListItem mr="2em" key={index}>
+                                    <ListItem key={contact.mail}>
                                             <span className="font-bold mr-2">
                                                 E-mail:
                                             </span>
@@ -207,7 +205,7 @@ const Curriculum = (data) => {
                                                 {contact.mail}
                                             </span>
                                     </ListItem>
-                                    <ListItem>
+                                    <ListItem key={contact.phone}>
                                             <span className="font-bold mr-2">
                                                 Tel.:
                                             </span>
@@ -246,7 +244,7 @@ const Curriculum = (data) => {
                         >
                             {
                             curriculum.skills.map(skill => (
-                                <ListItem
+                                <ListItem key={skill.skill}
                                     marginBottom="2px"
                                     w="100%"
                                     display="flex"
@@ -325,7 +323,7 @@ const Curriculum = (data) => {
                             <List>
                                 {
                                     curriculum.study.map(study => (
-                                        <ListItem p="2px" className="flex-col">
+                                        <ListItem p="2px" className="flex-col" key={study.college}>
                                             <span className="font-bold block">{study.college}</span>
                                             <span>
                                             { study.desc }
@@ -358,7 +356,7 @@ const Curriculum = (data) => {
                                     <List>
                                         {
                                             curriculum.experience.map(exp => (
-                                                <ListItem p="2px" className="flex-col">
+                                                <ListItem p="2px" className="flex-col" key={exp.local}>
                                                     <span className="font-bold block">{exp.local}</span>
                                                     <span className="py-1 px-4">
                                             {exp.desc}
@@ -395,7 +393,6 @@ export const getServerSideProps = async (ctx) => {
             id: parseInt(curriculumId),
         }
     })
-    console.log(data)
     return { props: data }
 }
 

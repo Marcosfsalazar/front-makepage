@@ -8,7 +8,6 @@ import Button from "../../../components/Button";
 
 const Dashboard = ({ userid, data }) => {
     const { cards } = data;
-    console.log(cards)
     const [dataId, setDataId] = useState();
     const [openModal, setOpenModal] = useState(false);
     if(!cards){
@@ -81,7 +80,6 @@ const Dashboard = ({ userid, data }) => {
 export const getServerSideProps = async (ctx) => {
     const client = createApolloClient();
     const {userid} = ctx.query;
-    console.log(userid)
     const { data } = await client.query({
         query: gql`
             query cards($userId: Int){

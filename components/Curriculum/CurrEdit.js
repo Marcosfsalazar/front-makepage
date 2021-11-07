@@ -50,7 +50,6 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
         })
             .then(async (response) => {
                 if(response){
-                    console.log(response)
                     toast.configure()
                     toast('Salvo com sucesso!',{
                         position: "bottom-center",
@@ -62,7 +61,7 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                 }
             })
             .catch(e => {
-                console.log(e)
+                console.error(e)
             })
     }
     return(
@@ -81,7 +80,6 @@ const CurrEdit = ({ currId, userId, setOpenModal }) => {
                             theme: data?.curriculum.data?.theme
                         }}
                         onSubmit={(values) => {
-                            console.log(values)
                             handleUpdateCurriculum(values)
                         }}
                     >

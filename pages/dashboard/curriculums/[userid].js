@@ -8,7 +8,6 @@ import Button from "../../../components/Button";
 
 const Dashboard = ({ userid, data }) => {
     const { curricula } = data;
-    console.log(curricula)
     const [dataId, setDataId] = useState();
     const [openModal, setOpenModal] = useState(false);
     if(!curricula){
@@ -46,7 +45,6 @@ const Dashboard = ({ userid, data }) => {
                     <ul className="mt-8 mb-8">
                         {curricula &&
                         curricula?.map((card, index) => {
-                            console.log(card)
                             return(
                                 <li key={index} className="
                                     px-2
@@ -82,7 +80,6 @@ const Dashboard = ({ userid, data }) => {
 export const getServerSideProps = async (ctx) => {
     const client = createApolloClient();
     const {userid} = ctx.query;
-    console.log(userid)
     const { data } = await client.query({
         query: gql`
             query curricula($userId: Int){

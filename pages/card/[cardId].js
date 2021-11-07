@@ -8,7 +8,6 @@ import { Box } from '@chakra-ui/react'
 
 const Card = ({ data }) => {
     const { card } = data;
-    console.log(card)
     const [updtDado] = useMutation(updateDado);
     if(!card){
         return "Loading...";
@@ -32,8 +31,8 @@ const Card = ({ data }) => {
                         }
                     }
                 }
-            }).then(() => console.log("Welcome!"))
-                .catch(e => console.log(JSON.stringify(e)))
+            })
+                .catch(e => console.error(JSON.stringify(e)))
         }
     },[dado])
     return (

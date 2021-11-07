@@ -46,7 +46,6 @@ const CardBuilder = ({ data }) => {
                     })
                         .then(async (response) => {
                             if(response){
-                                console.log(response)
                                 toast.configure()
                                 toast('Salvo com sucesso!',{
                                     position: "bottom-center",
@@ -58,11 +57,11 @@ const CardBuilder = ({ data }) => {
                             }
                         })
                         .catch(e => {
-                            console.log(e)
+                            console.error(e)
                         })
                 })
                 .catch(e => {
-                    console.log(e)
+                    console.error(e)
                 })
     }
 

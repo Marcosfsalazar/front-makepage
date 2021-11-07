@@ -11,7 +11,6 @@ import {useState} from "react";
 
 const CurriculumBuilder = ({ data }) => {
     const { userId } = data;
-    console.log(data)
     const [link, setLink] = useState('')
     const [saveCurriculum] = useMutation(createCurriculum)
     const [saveDado] = useMutation(createDado)
@@ -52,7 +51,6 @@ const CurriculumBuilder = ({ data }) => {
                 })
                     .then(async (response) => {
                         if(response){
-                            console.log(response)
                             toast.configure()
                             toast('Salvo com sucesso!',{
                                 position: "bottom-center",
@@ -64,11 +62,11 @@ const CurriculumBuilder = ({ data }) => {
                         }
                     })
                     .catch(e => {
-                        console.log(e)
+                        console.error(e)
                     })
             })
             .catch(e => {
-                console.log(e)
+                console.error(e)
             })
     }
     return(
@@ -115,7 +113,7 @@ const CurriculumBuilder = ({ data }) => {
                             theme: "white"
                         }}
                         onSubmit={(values) => {
-                            console.log(values)
+                            console.error(values)
                             handleSaveCurriculum(values)
                         }}
                     >
