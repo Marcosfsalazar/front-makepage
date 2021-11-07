@@ -8,6 +8,8 @@ import {deleteCard} from "../../lib/mutations/cardMutation";
 import {toast} from "react-toastify";
 import Button from "../../components/Button";
 import {GET_CARDS} from "../../lib/queries/cardQueries";
+import ShareButton from "../../components/ShareButton";
+import {useSession} from "next-auth/client";
 
 const MyCards = ({ userid }) => {
     const { data, loading } = useQuery(GET_CARDS, {
@@ -20,6 +22,7 @@ const MyCards = ({ userid }) => {
     const [cardList, setCardList] = useState([]);
     const [cards, setCards] = useState();
     const [cardId, setCardId] = useState();
+    const [{ user }] = useSession()
     const [deleteOneCard] = useMutation(deleteCard,{
         refetchQueries:[
             {
@@ -70,7 +73,6 @@ const MyCards = ({ userid }) => {
             })
         setOpenModal(false);
     }
-
     const handleCardDeleteModal = (id) => {
         setOpenModal(true);
         setCardId(id);
@@ -118,7 +120,7 @@ const MyCards = ({ userid }) => {
                                     border-b
                                     flex
                                     items-center
-                                    justify-between
+                                    justify-around
                                     h-12">
                                         <h1 className="font-bold">{ index }</h1>
                                         <span>{card?.data?.cardData?.name}</span>
@@ -159,6 +161,7 @@ const MyCards = ({ userid }) => {
                                         >
                                             Excluir
                                         </button>
+                                        <ShareButton name={user?.username} pagetype={"card"} link={`${window.location.origin}/card/${card.id}`}/>
                                     </li>
                                 )
                             })
