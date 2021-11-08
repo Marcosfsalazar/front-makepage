@@ -2,6 +2,9 @@ import React from 'react';
 import {Box} from "@chakra-ui/react";
 
 const LinkModal =  ({ url, setModal }) => {
+    const handleRedirect = () => {
+        window.open(url, "_blank")
+    }
     return(
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <Box
@@ -19,7 +22,7 @@ const LinkModal =  ({ url, setModal }) => {
                 >
                     Link:
                     <span>{ url }</span>
-                    <a href={url} className="text-blue-800" rel="noopener noreferrer" target="_blank">clique para visitar</a>
+                    <button onClick={handleRedirect} className="text-blue-800">clique para visitar</button>
                     <button
                         className="mt-4 bg-red-500 rounded w-20"
                         onClick={() => setModal(false)}
