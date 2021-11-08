@@ -61,7 +61,7 @@ const CurriculumBuilder = ({ data }) => {
                                 type: "success",
                             })
                             setLink(response?.data?.createCurriculum?.curriculum?.id);
-                            setOpenModal(true);;
+                            setOpenModal(true);
                         }
                     })
                     .catch(e => {
