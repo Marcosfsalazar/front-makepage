@@ -3,7 +3,7 @@ import {Box} from "@chakra-ui/react";
 
 const LinkModal =  ({ url, setModal }) => {
     const handleRedirect = () => {
-        window.open(url, "_blank")
+        window.open(url)
     }
     return(
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
