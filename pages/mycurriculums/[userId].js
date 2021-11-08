@@ -160,7 +160,7 @@ const MyCurriculums = ({ userId }) => {
                                 >
                                     Excluir
                                 </button>
-                                <ShareButton name={user?.username} pagetype={"card"} link={`${window.location.origin}/card/${curriculum.id}`}/>
+                                <ShareButton name={user?.username} pagetype={"card"} link={`${window.location.origin}/curriculum/${curriculum.id}`}/>
                             </li>
                         )
                     })
