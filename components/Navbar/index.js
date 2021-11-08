@@ -86,7 +86,7 @@ export default function Navbar() {
                             className="hover:bg-gray-300"
                             onClick={handleLogout}
                         >
-                            Logout
+                            Sair
                         </Button>
                         </>
 
@@ -116,7 +116,7 @@ export default function Navbar() {
                                                 || "hover:text-white"
                                             }
                                         >
-                                            <span>Login</span>
+                                            <span>Entrar</span>
                                         </Button>
                                     </Link>
                                 </div>
@@ -129,7 +129,7 @@ export default function Navbar() {
                                                 || "hover:text-white"
                                             }
                                         >
-                                            <span>Register</span>
+                                            <span>Registrar</span>
                                         </Button>
                                     </Link>
                                 </div>

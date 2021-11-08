@@ -55,9 +55,9 @@ export default function Home(){
                                 mx-auto
                             "
                         >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis
+                            Aqui você terá acesso a criação e monitoramento de virtual curriculum e
+                            cards de forma simples e prática, com apenas alguns cliques!
+                            Está pronto para começar?
                         </p>
                         <Link href={`/builder/card/${user?.id}`}>
                             <button
@@ -78,7 +78,7 @@ export default function Home(){
                                     text-gray-500
                                     "
                                 >
-                                    Virtual Card
+                                    Cartão de Apresentação
                                 </span>
                             </button>
                         </Link>
@@ -101,7 +101,7 @@ export default function Home(){
                                 text-gray-500
                                 "
                             >
-                                Virtual Curriculum
+                                Currículo Virtual
                             </span>
                             </button>
 

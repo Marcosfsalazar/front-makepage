@@ -71,7 +71,7 @@ const Register = () => {
             >
                 <div className="max-w-sm text-center rounded overflow-hidden shadow-lg border rounded">
                         <div className="px-6 py-4 space-y-4">
-                            <div className="font-bold text-xl mb-2">REGISTER</div>
+                            <div className="font-bold text-xl mb-2">REGISTRO</div>
                             <Formik
                                 initialValues={initialValues}
                                 onSubmit={handleSubmit}
@@ -117,7 +117,7 @@ const Register = () => {
                                         <Field
                                             type="password"
                                             name="password"
-                                            placeholder="password"
+                                            placeholder="senha"
                                             required
                                             className="
                                                 border

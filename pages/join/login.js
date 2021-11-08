@@ -92,11 +92,11 @@ const Login = () => {
                                     />
                                 </label>
                                 <label className="flex flex-col items-start p-2">
-                                    Password
+                                    Senha
                                     <Field
                                         type="password"
                                         name="password"
-                                        placeholder="password"
+                                        placeholder="senha"
                                         className="
                                                 border
                                                 border-gray-600

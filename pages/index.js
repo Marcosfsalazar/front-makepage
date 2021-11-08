@@ -60,9 +60,9 @@ export default function Home() {
           <p
             className="w-3/5 text-center text-gray-500"
           >
-            Construa seu site em questão de instantes!
-            Precisando de um site de links pessoais ou um currículo para uma nova oportunidade?
-            veio ao lugar certo!
+            Construa seu currículo e cartão de visitas pessoal em instantes!
+            Card Maker cria de forma intuitiva e fácil cartões e currículos virtuais para
+            divulgação online e apresenta estatísticas de monitoramento e edição em tempo real!
           </p>
           <Link href="/join/register">
             <Button

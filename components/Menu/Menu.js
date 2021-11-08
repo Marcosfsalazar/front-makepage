@@ -1,6 +1,5 @@
 import {signOut, useSession} from "next-auth/client";
 import Link from 'next/link'
-import Button from "../Button";
 import React from "react";
 import {useRouter} from "next/router";
 import { url_picture } from "../../lib/constants";
@@ -74,12 +73,12 @@ const Menu = () => {
             </div>
             <ul>
                 <LiWhite><Link className="cursor-pointer" href="/profile">Perfil</Link></LiWhite>
-                <LiGray><Link className="cursor-pointer" href="/home">Home</Link></LiGray>
+                <LiGray><Link className="cursor-pointer" href="/home">Início</Link></LiGray>
                 <LiWhite>
                     <button
                         onClick={handleLogout}
                     >
-                        Logout
+                        Sair
                     </button>
                 </LiWhite>
             </ul>
