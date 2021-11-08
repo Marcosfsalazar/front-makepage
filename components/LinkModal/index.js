@@ -18,8 +18,7 @@ const LinkModal =  ({ url, setModal }) => {
                     alignItems="center"
                 >
                     Link:
-                    <span>{ url }</span>
-                    <a href={url} className="text-blue-800" rel="noopener noreferrer">clique para visitar</a>
+                    <a href={url} className="text-blue-800" rel="noopener noreferrer" target="_blank">{ url }</a>
                     <button
                         className="mt-4 bg-red-500 rounded w-20"
                         onClick={() => setModal(false)}

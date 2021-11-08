@@ -4,6 +4,7 @@ const ShareButton = ({ link="", name="", pagetype="" }) => {
     return(
         <>
                 <a
+                    rel="noopener noreferrer"
                     href={`https://web.whatsapp.com/send?text=Acesse o ${pagetype} de ${name}: ${link}`}
                     target="_blank"
                     className="
