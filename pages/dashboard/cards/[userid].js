@@ -33,10 +33,10 @@ const Dashboard = ({ userid, data }) => {
                         <Button className="m-2">Dashboard</Button>
                     </Link>
                     <Link href={`/builder/card/${userid}`}>
-                        <Button className="m-2">New Card</Button>
+                        <Button className="m-2">Novo cartão</Button>
                     </Link>
                     <Link href={`/mycards/${userid}`}>
-                        <Button className="m-2">My Cards</Button>
+                        <Button className="m-2">Meus cartões</Button>
                     </Link>
                 </nav>
                 <section className="w-full h-1 bg-gray-400 flex justify-center items-center">

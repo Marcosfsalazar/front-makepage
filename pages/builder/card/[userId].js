@@ -111,7 +111,7 @@ const CardBuilder = ({ data }) => {
     const bg = themeDefine();
 
     return(
-        <div className="flex">
+        <Box className="flex bg-gray-200">
             <Menu/>
             <main className="flex flex-col w-screen">
                 <nav
@@ -125,9 +125,9 @@ const CardBuilder = ({ data }) => {
                     <Link href={`/dashboard/cards/${userId}`}>
                         <Button className="m-2">Dashboard</Button>
                     </Link>
-                    <Button className="m-2">New Card</Button>
+                    <Button className="m-2">Novo Cartão</Button>
                     <Link href={`/mycards/${userId}`}>
-                        <Button className="m-2">My Cards</Button>
+                        <Button className="m-2">Meus cartões</Button>
                     </Link>
                 </nav>
                 <section className="w-full h-20 bg-gray-200 flex justify-center items-center">
@@ -224,7 +224,7 @@ const CardBuilder = ({ data }) => {
                     <LinkModal url={`${window.location.origin}/card/${link}`} setModal={setOpenModal}/>
                 }
             </main>
-        </div>
+        </Box>
     )
 }
 

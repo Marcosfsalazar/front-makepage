@@ -103,8 +103,8 @@ const CardOneEdit = ({ setData, theme }) => {
             bg={`${colors.profileColor}`}
             borderRadius="lg"
             className="
-                w-8/12
-                h-80
+                w-3/5
+                h-3/5
                 flex
                 shadow-md"
         >
@@ -237,7 +237,7 @@ const CardOneEdit = ({ setData, theme }) => {
                 />
             </Box>
             <Box bg={colors.secondaryColor} color="white" className="w-2/3 h-full p-8">
-                <Box color={colors.alternativeText || colors.textColor} className="mt-12">
+                <Box color={colors.alternativeText || colors.textColor} className="mt-24">
                     <Input
                         className="font-semibold"
                         value={about}
