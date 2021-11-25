@@ -100,10 +100,10 @@ const MyCurriculums = ({ userId }) => {
                         <Button className="m-2">Dashboard</Button>
                     </Link>
                     <Link href={`/builder/curriculum/${userId}`}>
-                        <Button className="m-2">Novo Currículo</Button>
+                        <Button className="m-2">Novo Curriculum</Button>
                     </Link>
                     <Link href={`/mycurriculums/${userId}`}>
-                        <Button className="m-2">MeusCurrículos</Button>
+                        <Button className="m-2">Meus Curriculums</Button>
                     </Link>
                 </nav>
                 <section className="w-full h-1 bg-gray-400 flex justify-center items-center">

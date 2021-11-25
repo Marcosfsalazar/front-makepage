@@ -97,14 +97,14 @@ const CurriculumBuilder = ({ data }) => {
                         <Button className="m-2">Dashboard</Button>
                     </Link>
                     <Link href={`/builder/curriculum/${userId}`}>
-                        <Button className="m-2">New Curriculum</Button>
+                        <Button className="m-2">Novo Curriculum</Button>
                     </Link>
                     <Link href={`/mycurriculums/${userId}`}>
-                        <Button className="m-2">My Curriculums</Button>
+                        <Button className="m-2">Meus Curriculums</Button>
                     </Link>
                 </nav>
                 <section className="w-full h-20 bg-gray-200 flex justify-center items-center">
-                    <h1 className="font-bold text-xl">New Curriculum</h1>
+                    <h1 className="font-bold text-xl">Novo curriculum</h1>
                 </section>
                 {openModal &&
                     <LinkModal url={`${window.location.origin}/curriculum/${link}`} setModal={setOpenModal}/>

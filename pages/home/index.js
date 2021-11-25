@@ -101,7 +101,7 @@ export default function Home(){
                                 text-gray-500
                                 "
                             >
-                                Currículo Virtual
+                                Curriculum Virtual
                             </span>
                             </button>
 

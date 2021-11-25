@@ -33,10 +33,10 @@ const Dashboard = ({ userid, data }) => {
                         <Button className="m-2">Dashboard</Button>
                     </Link>
                     <Link href={`/builder/curriculum/${userid}`}>
-                        <Button className="m-2">New Curriculum</Button>
+                        <Button className="m-2">Novo Curriculum</Button>
                     </Link>
                     <Link href={`/mycurriculums/${userid}`}>
-                        <Button className="m-2">My Curriculums</Button>
+                        <Button className="m-2">Meus Curriculum</Button>
                     </Link>
                 </nav>
                 <section className="w-full h-1 bg-gray-400 flex justify-center items-center">
