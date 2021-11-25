@@ -1,4 +1,5 @@
 import {useQuery} from "@apollo/client";
+import { Box } from "@chakra-ui/layout";
 import {dadoQuery} from "../../lib/queries/dadosQueries";
 
 const Stats = ({ id, setModal }) => {
@@ -13,9 +14,9 @@ const Stats = ({ id, setModal }) => {
     }
     if(!data) return null;
     return(
-        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <Box className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <fieldset className="bg-gray-200 w-1/4 h-1/4 text-center rounded flex flex-col items-center">
-                <p className="mt-5"><span>Visits: </span><span>{data.dado.visits}</span></p>
+                <p className="mt-14"><span>Visits: </span><span>{data.dado.visits}</span></p>
                 <p
                     className="flex flex-col"
                 ><span>Visitado pela última vez:</span><span>{handleData(data.dado.updated_at)}</span></p>
@@ -26,7 +27,7 @@ const Stats = ({ id, setModal }) => {
                     Fechar
                 </button>
             </fieldset>
-        </div>
+        </Box>
     )
 }
 
